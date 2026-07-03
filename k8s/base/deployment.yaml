@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: erp-app
+  labels:
+    app: erp-app
+    version: v1
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: erp-app
+  template:
+    metadata:
+      labels:
+        app: erp-app
+        version: v1
+    spec:
+      imagePullSecrets:
+        - name: ghcr-secret
+      containers:
+        - name: erp-app
+          image: ghcr.io/farouk-bi/erp-app:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: NODE_ENV
+              value: "production"
+            - name: PORT
+              value: "3000"
+            - name: DB_HOST
+              value: "postgresql.security-tools.svc.cluster.local"
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_NAME
+              value: "erp_db"
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: erp-db-credentials
+                  key: username
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: erp-db-credentials
+                  key: password
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: erp-app-secrets
+                  key: jwt-secret
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 3000
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 15
+            periodSeconds: 10
