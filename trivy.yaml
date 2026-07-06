@@ -1,7 +1,7 @@
 # trivy.yaml — Configuration Trivy
 severity:
   - CRITICAL
- # - HIGH
+  - HIGH
 
 format: json
 

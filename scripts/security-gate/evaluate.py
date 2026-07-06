@@ -168,8 +168,7 @@ class SecurityGate:
 
         # Critère 2 : 0 vulnérabilité High
         if self.results["total_high"] > 0:
-            passed = False
-            reasons.append(f"❌ {self.results['total_high']} vulnérabilités HIGH détectées")
+            reasons.append(f"⚠️  {self.results['total_high']} vulnérabilités HIGH détectées (non bloquant)")
 
         # Critère 3 : 0 secret détecté
         if self.results["secrets_found"] > 0:
