@@ -84,6 +84,7 @@ pipeline {
                 container('docker') {
                     sh "docker build -t ${GHCR_REGISTRY}/${IMAGE_NAME}:${BUILD_NUMBER} ."
                     sh "docker tag ${GHCR_REGISTRY}/${IMAGE_NAME}:${BUILD_NUMBER} ${GHCR_REGISTRY}/${IMAGE_NAME}:latest"
+                    sh "docker save ${GHCR_REGISTRY}/${IMAGE_NAME}:${BUILD_NUMBER} -o erp-app-image.tar"
                 }
             }
         }
@@ -129,7 +130,7 @@ pipeline {
                 stage('Container Scan — Trivy Image') {
                     steps {
                         container('trivy') {
-                            sh "trivy image --format json --output ${REPORTS_DIR}/trivy-image.json --severity CRITICAL,HIGH ${GHCR_REGISTRY}/${IMAGE_NAME}:${BUILD_NUMBER}"
+                            sh "trivy image --input erp-app-image.tar --format json --output ${REPORTS_DIR}/trivy-image.json --severity CRITICAL,HIGH"
                         }
                     }
                 }
