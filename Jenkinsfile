@@ -112,8 +112,8 @@ pipeline {
                 stage('SCA — Trivy FS') {
                     steps {
                         container('trivy') {
-                            sh "trivy fs --format json --output ${REPORTS_DIR}/trivy-sca.json --severity CRITICAL,HIGH ."
-                            sh "trivy fs --format cyclonedx --output ${REPORTS_DIR}/sbom.json ."
+                            sh "trivy fs --format json --output ${REPORTS_DIR}/trivy-sca.json --severity CRITICAL,HIGH --skip-dirs .scannerwork --skip-dirs node_modules --skip-dirs .git ."
+                            sh "trivy fs --format cyclonedx --output ${REPORTS_DIR}/sbom.json --skip-dirs .scannerwork --skip-dirs node_modules --skip-dirs .git ."
                         }
                     }
                 }
@@ -280,7 +280,7 @@ pipeline {
             echo "❌ ERP SecurePipeline — Build #${BUILD_NUMBER} FAILED"
         }
         always {
-            deleteDir()
+            echo "🧹 Pipeline terminé. Nettoyage automatique par K8s (pod éphémère)."
         }
     }
 }
