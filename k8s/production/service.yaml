@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: erp-app
+  namespace: production
+spec:
+  type: ClusterIP
+  selector:
+    app: erp-app
+    slot: blue    # <-- On bascule cette valeur entre blue/green
+  ports:
+    - port: 80
+      targetPort: 3000

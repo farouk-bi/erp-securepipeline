@@ -1,0 +1,25 @@
+title = "ERP SecurePipeline GitLeaks Config"
+
+[extend]
+useDefault = true
+
+[[rules]]
+id = "erp-db-password"
+description = "ERP Database Password"
+regex = '''(?i)(db_password|database_password|postgres_password)\s*[=:]\s*['"]?[\w@!#$%^&*]+['"]?'''
+tags = ["erp", "database", "password"]
+
+[[rules]]
+id = "jwt-secret-hardcoded"
+description = "Hardcoded JWT Secret"
+regex = '''(?i)(jwt_secret|jwt_key)\s*[=:]\s*['"][^'"]{8,}['"]'''
+tags = ["erp", "jwt", "secret"]
+
+[allowlist]
+paths = [
+    '''\.gitleaks\.toml$''',
+    '''tests/.*\.test\.js$''',
+    '''\.env\.example$''',
+    '''docs/.*\.md$''',
+    '''package-lock\.json$'''
+]

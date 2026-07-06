@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: erp-app-blue
+  namespace: production
+  labels:
+    app: erp-app
+    slot: blue
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: erp-app
+      slot: blue
+  template:
+    metadata:
+      labels:
+        app: erp-app
+        slot: blue
+    spec:
+      imagePullSecrets:
+        - name: ghcr-secret
+      containers:
+        - name: erp-app
+          image: ghcr.io/VOTRE_USERNAME/erp-app:BUILD_NUMBER
+          ports:
+            - containerPort: 3000
+          envFrom:
+            - secretRef:
+                name: erp-db-credentials
+            - secretRef:
+                name: erp-app-secrets
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 3000
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 15
+            periodSeconds: 10

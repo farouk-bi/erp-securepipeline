@@ -1,0 +1,15 @@
+# trivy.yaml — Configuration Trivy
+severity:
+  - CRITICAL
+  - HIGH
+
+format: json
+
+# Ignorer les vulnérabilités sans fix disponible (optionnel)
+ignore-unfixed: false
+
+# Timeout
+timeout: 10m
+
+# Cache directory
+cache-dir: /tmp/trivy-cache
