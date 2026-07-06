@@ -280,7 +280,7 @@ pipeline {
             echo "❌ ERP SecurePipeline — Build #${BUILD_NUMBER} FAILED"
         }
         always {
-            cleanWs()
+            deleteDir()
         }
     }
 }
