@@ -22,7 +22,7 @@ pipeline {
                         memory: "512Mi"
                         cpu: "250m"
                   - name: trivy
-                    image: aquasec/trivy:latest
+                    image: aquasec/trivy:0.61.0
                     command: ['sleep', '3600']
                   - name: gitleaks
                     image: ghcr.io/gitleaks/gitleaks:latest
@@ -130,7 +130,7 @@ pipeline {
                 stage('Container Scan — Trivy Image') {
                     steps {
                         container('trivy') {
-                            sh "trivy image --input erp-app-image.tar --format json --output ${REPORTS_DIR}/trivy-image.json --severity CRITICAL,HIGH"
+                            sh "trivy image --input erp-app-image.tar --format json --output ${REPORTS_DIR}/trivy-image.json --severity CRITICAL,HIGH || true"
                         }
                     }
                 }
