@@ -31,7 +31,7 @@ pipeline {
                     image: python:3.11-slim
                     command: ['sleep', '3600']
                   - name: kubectl
-                    image: bitnami/kubectl:latest
+                    image: dtzar/helm-kubectl:latest
                     command: ['sleep', '3600']                
             '''
         }
