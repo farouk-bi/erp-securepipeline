@@ -95,49 +95,53 @@ pipeline {
         // ════════════════════════════════════════════
         // STAGE 2 : SECURITY SCANNING (parallélisé)
         // ════════════════════════════════════════════
-        stage('Secrets — GitLeaks') {
-            steps {
-                container('gitleaks') {
-                    sh "gitleaks detect --source . --report-format json --report-path ${REPORTS_DIR}/gitleaks.json --no-git || true"
-                }
-            }
-        }
-
-        stage('SAST — SonarQube') {
-            steps {
-                container('node') {
-                    withSonarQubeEnv('SonarQube') {
-                        sh """
-                            npx sonarqube-scanner \
-                                -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
-                                -Dsonar.sources=src \
-                                -Dsonar.tests=tests \
-                                -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
-                        """
+        stage('Security Scanning') {
+            parallel {
+                stage('SAST — SonarQube') {
+                    steps {
+                        container('node') {
+                            withSonarQubeEnv('SonarQube') {
+                                sh '''
+                                    npx sonarqube-scanner \
+                                        -Dsonar.projectKey=erp-securepipeline \
+                                        -Dsonar.sources=src \
+                                        -Dsonar.tests=tests \
+                                        -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info
+                                '''
+                            }
+                        }
                     }
                 }
-            }
-        }
 
-        stage('SCA — Trivy FS') {
-            steps {
-                container('trivy') {
-                    sh """
-                        trivy fs --format json --output ${REPORTS_DIR}/trivy-sca.json --severity CRITICAL,HIGH --skip-dirs .scannerwork --skip-dirs node_modules --skip-dirs .git . || echo '{"Results":[]}' > ${REPORTS_DIR}/trivy-sca.json
-                    """
-                    sh """
-                        trivy fs --format cyclonedx --output ${REPORTS_DIR}/sbom.json --skip-dirs .scannerwork --skip-dirs node_modules --skip-dirs .git . || true
-                    """
+                stage('SCA — Trivy FS') {
+                    steps {
+                        container('trivy') {
+                            sh """
+                                trivy fs --format json --output ${REPORTS_DIR}/trivy-sca.json --severity CRITICAL,HIGH --skip-dirs .scannerwork --skip-dirs node_modules --skip-dirs .git . || echo '{"Results":[]}' > ${REPORTS_DIR}/trivy-sca.json
+                            """
+                            sh """
+                                trivy fs --format cyclonedx --output ${REPORTS_DIR}/sbom.json --skip-dirs .scannerwork --skip-dirs node_modules --skip-dirs .git . || true
+                            """
+                        }
+                    }
                 }
-            }
-        }
 
-        stage('Container Scan — Trivy Image') {
-            steps {
-                container('trivy') {
-                    sh """
-                        trivy image --input erp-app-image.tar --format json --output ${REPORTS_DIR}/trivy-image.json --severity CRITICAL,HIGH || echo '{"Results":[]}' > ${REPORTS_DIR}/trivy-image.json
-                    """
+                stage('Secrets — GitLeaks') {
+                    steps {
+                        container('gitleaks') {
+                            sh "gitleaks detect --source . --report-format json --report-path ${REPORTS_DIR}/gitleaks.json --no-git || true"
+                        }
+                    }
+                }
+
+                stage('Container Scan — Trivy Image') {
+                    steps {
+                        container('trivy') {
+                            sh """
+                                trivy image --input erp-app-image.tar --format json --output ${REPORTS_DIR}/trivy-image.json --severity CRITICAL,HIGH || echo '{"Results":[]}' > ${REPORTS_DIR}/trivy-image.json
+                            """
+                        }
+                    }
                 }
             }
         }
