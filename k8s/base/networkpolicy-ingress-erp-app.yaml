@@ -1,0 +1,15 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-ingress-to-erp-app
+  namespace: staging
+spec:
+  podSelector:
+    matchLabels:
+      app: erp-app
+  policyTypes:
+    - Ingress
+  ingress:
+    - ports:
+        - protocol: TCP
+          port: 3000
