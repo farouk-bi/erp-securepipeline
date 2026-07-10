@@ -182,7 +182,7 @@ pipeline {
                         kubectl rollout status deployment/erp-app -n staging --timeout=120s || true
                     """
                     sh '''
-                        sleep 10
+                        sleep 20
                         kubectl exec -n staging deploy/erp-app -- \
                             wget -qO- http://localhost:3000/health || true
                     '''
@@ -196,6 +196,17 @@ pipeline {
         stage('DAST — OWASP ZAP') {
             steps {
                 container('docker') {
+                    sh '''
+                        # Attendre que le service réponde avant de lancer le scan
+                        for i in $(seq 1 10); do
+                            if curl -sf http://erp-app.staging.svc:80/health > /dev/null 2>&1; then
+                                echo "Service is up, starting ZAP scan"
+                                break
+                            fi
+                            echo "Waiting for service... ($i/10)"
+                            sleep 5
+                        done
+                    '''
                     sh """
                         docker run --rm --network host \
                             -v \$(pwd)/${REPORTS_DIR}:/zap/wrk:rw \
