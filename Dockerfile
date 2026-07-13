@@ -1,6 +1,6 @@
-# ========================================
+
 # Stage 1 : Builder
-# ========================================
+
 FROM node:20-alpine AS builder
 
 WORKDIR /app
@@ -12,9 +12,9 @@ RUN npm install --omit=dev && mkdir -p node_modules
 # Copier le code source
 COPY src/ ./src/
 
-# ========================================
+
 # Stage 2 : Production
-# ========================================
+
 FROM node:20-alpine AS production
 
 # Sécurité : ne pas exécuter en root

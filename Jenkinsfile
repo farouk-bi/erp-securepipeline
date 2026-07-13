@@ -46,9 +46,9 @@ pipeline {
 
     stages {
 
-        // ════════════════════════════════════════════
+        
         // STAGE 1 : CHECKOUT & BUILD
-        // ════════════════════════════════════════════
+       
         stage('Checkout') {
             steps {
                 checkout scm
@@ -92,9 +92,9 @@ pipeline {
             }
         }
 
-        // ════════════════════════════════════════════
+        
         // STAGE 2 : SECURITY SCANNING (parallélisé)
-        // ════════════════════════════════════════════
+        
         stage('Security Scanning') {
             parallel {
                 stage('SAST — SonarQube') {
@@ -146,9 +146,9 @@ pipeline {
             }
         }
 
-        // ════════════════════════════════════════════
+        
         // STAGE 3 : SECURITY GATE #1
-        // ════════════════════════════════════════════
+        
         stage('Security Gate #1') {
             steps {
                 container('python') {
@@ -157,9 +157,9 @@ pipeline {
             }
         }
 
-        // ════════════════════════════════════════════
+        // 
         // STAGE 4 : PUSH & DEPLOY STAGING
-        // ════════════════════════════════════════════
+        // 
         stage('Push to GHCR') {
             steps {
                 container('docker') {
@@ -190,9 +190,9 @@ pipeline {
             }
         }
 
-        // ════════════════════════════════════════════
+        // 
         // STAGE 5 : DAST (sur staging)
-        // ════════════════════════════════════════════
+        // 
         stage('DAST — OWASP ZAP') {
             steps {
                 container('docker') {
@@ -229,9 +229,9 @@ pipeline {
             }
         }
 
-        // ════════════════════════════════════════════
+        // 
         // STAGE 6 : SECURITY GATE #2
-        // ════════════════════════════════════════════
+        // 
         stage('Security Gate #2') {
             steps {
                 container('python') {
@@ -240,9 +240,9 @@ pipeline {
             }
         }
 
-        // ════════════════════════════════════════════
+        // 
         // STAGE 7 : DEPLOY PRODUCTION (main branch only)
-        // ════════════════════════════════════════════
+        // 
         stage('Deploy Production') {
             when { branch 'main' }
             steps {
@@ -252,9 +252,9 @@ pipeline {
             }
         }
 
-        // ════════════════════════════════════════════
+        // 
         // STAGE 8 : POST-DEPLOY
-        // ════════════════════════════════════════════
+        // 
         stage('Post-Deploy') {
             steps {
                 container('python') {
@@ -265,44 +265,20 @@ pipeline {
         }
     }
 
-    // ════════════════════════════════════════════
+    
+
+// // 
     // POST-ACTIONS
-    // ════════════════════════════════════════════
-   // post {
-        //success {
-            //slackSend(
-              //  channel: '#devsecops-alerts',
-                //color: '#36a64f',
-                //message: "✅ *ERP SecurePipeline* — Build #${BUILD_NUMBER} SUCCESS\n<${BUILD_URL}|Voir le build>"
-            //)
-     //   }
-       // failure {
-         //   slackSend(
-           //     channel: '#devsecops-alerts',
-             //   color: '#ff0000',
-              //  message: "❌ *ERP SecurePipeline* — Build #${BUILD_NUMBER} FAILED\n<${BUILD_URL}|Voir le build>"
-            //)
-        //}
-        //always {
-          //  cleanWs()
-        //}
-   // }
-//}
-// 
-// 
-// 
-// // ════════════════════════════════════════════
-    // POST-ACTIONS
-    // ════════════════════════════════════════════
+    // 
     post {
         success {
-            echo "✅ ERP SecurePipeline — Build #${BUILD_NUMBER} SUCCESS"
+            echo " ERP SecurePipeline — Build #${BUILD_NUMBER} SUCCESS"
         }
         failure {
-            echo "❌ ERP SecurePipeline — Build #${BUILD_NUMBER} FAILED"
+            echo " ERP SecurePipeline — Build #${BUILD_NUMBER} FAILED"
         }
         always {
-            echo "🧹 Pipeline terminé. Nettoyage automatique par K8s (pod éphémère)."
+            echo " Pipeline terminé. Nettoyage automatique par K8s (pod éphémère)."
         }
     }
 }

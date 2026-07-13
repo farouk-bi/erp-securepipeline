@@ -5,7 +5,7 @@ severity:
 
 format: json
 
-# Ignorer les vulnérabilités sans fix disponible (optionnel)
+# Ignorer les vulnérabilités sans fix disponible 
 ignore-unfixed: false
 
 # Timeout

@@ -1,10 +1,10 @@
 #!/bin/bash
-# scripts/zap-scan.sh — Scan DAST OWASP ZAP automatisé
+
 
 TARGET_URL="${1:-http://erp-app.staging.svc:80}"
 REPORT_DIR="${2:-reports}"
 
-echo "🔍 Starting OWASP ZAP DAST scan against: ${TARGET_URL}"
+echo " Starting OWASP ZAP DAST scan against: ${TARGET_URL}"
 
 mkdir -p ${REPORT_DIR}
 
@@ -21,7 +21,7 @@ docker run --rm \
 
 ZAP_EXIT=$?
 
-echo "✅ ZAP scan complete. Exit code: ${ZAP_EXIT}"
-echo "📄 Reports saved to ${REPORT_DIR}/zap-report.html and zap-report.json"
+echo " ZAP scan complete. Exit code: ${ZAP_EXIT}"
+echo " Reports saved to ${REPORT_DIR}/zap-report.html and zap-report.json"
 
 exit ${ZAP_EXIT}
