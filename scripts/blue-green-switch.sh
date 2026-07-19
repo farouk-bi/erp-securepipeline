@@ -4,7 +4,7 @@
 NEW_SLOT="${1:-green}"
 IMAGE_TAG="${2:-latest}"
 NAMESPACE="production"
-REGISTRY="ghcr.io/VOTRE_USERNAME/erp-app"
+REGISTRY="ghcr.io/farouk-bi/erp-app"
 
 # Déterminer le slot actuel
 CURRENT_SLOT=$(kubectl get svc erp-app -n ${NAMESPACE} -o jsonpath='{.spec.selector.slot}' 2>/dev/null || echo "blue")
