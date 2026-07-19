@@ -3,6 +3,7 @@ const router = express.Router();
 const Product = require('../models/product.model');
 const { authMiddleware, requireRole } = require('../middlewares/auth.middleware');
 const { Op } = require('sequelize');
+const { sequelize } = require('../config/database');
 
 router.use(authMiddleware);
 

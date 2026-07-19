@@ -22,7 +22,7 @@ spec:
         - name: ghcr-secret
       containers:
         - name: erp-app
-          image: ghcr.io/VOTRE_USERNAME/erp-app:BUILD_NUMBER
+          image: ghcr.io/farouk-bi/erp-app:BUILD_NUMBER
           ports:
             - containerPort: 3000
           envFrom:
