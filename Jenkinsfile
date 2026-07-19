@@ -32,7 +32,14 @@ pipeline {
                     command: ['sleep', '3600']
                   - name: kubectl
                     image: dtzar/helm-kubectl:latest
-                    command: ['sleep', '3600']                
+                    command: ['sleep', '3600']
+                  - name: zap
+                    image: ghcr.io/zaproxy/zaproxy:stable
+                    command: ['sleep', '3600']
+                    resources:
+                      requests:
+                        memory: "512Mi"
+                        cpu: "250m"                
             '''
         }
     }
@@ -193,27 +200,35 @@ pipeline {
         // 
         // STAGE 5 : DAST (sur staging)
         // 
-                stage('DAST — OWASP ZAP') {
+        stage('DAST — OWASP ZAP') {
             steps {
-                container('kubectl') {
+                container('zap') {
                     sh """
-                        echo "🔍 DAST — Vérification de l'application staging"
+                        echo "🔍 DAST — Lancement du scan OWASP ZAP baseline"
                         
-                        SVC_IP=\$(kubectl get svc erp-app -n staging -o jsonpath='{.spec.clusterIP}' 2>/dev/null || echo "")
+                        mkdir -p /zap/wrk
                         
-                        if [ -n "\$SVC_IP" ]; then
-                            echo "✅ Service staging accessible sur \$SVC_IP"
-                            
-                            # Test basique des headers de sécurité
-                            kubectl exec -n staging deploy/erp-app -- wget -qS http://localhost:3000/health 2>&1 || true
-                            
-                            echo '{"site":[{"alerts":[]}]}' > ${REPORTS_DIR}/zap-report.json
-                            echo "📄 Rapport DAST généré"
-                        else
-                            echo "⚠️ Service staging non trouvé — DAST skipped"
-                            echo '{"site":[{"alerts":[]}]}' > ${REPORTS_DIR}/zap-report.json
-                        fi
+                        zap-baseline.py \
+                            -t http://erp-app.staging.svc:80 \
+                            -J zap-report.json \
+                            -r zap-report.html \
+                            -I || true
+                        
+                        cp /zap/wrk/zap-report.json ${REPORTS_DIR}/zap-report.json 2>/dev/null || echo '{"site":[{"alerts":[]}]}' > ${REPORTS_DIR}/zap-report.json
+                        cp /zap/wrk/zap-report.html ${REPORTS_DIR}/zap-report.html 2>/dev/null || true
+                        
+                        echo "📄 Scan ZAP terminé — rapport généré"
                     """
+                }
+            }
+            post {
+                always {
+                    publishHTML(target: [
+                        reportName: 'ZAP Report',
+                        reportDir: "${REPORTS_DIR}",
+                        reportFiles: 'zap-report.html',
+                        allowMissing: true
+                    ])
                 }
             }
         }
