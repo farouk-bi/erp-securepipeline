@@ -258,9 +258,21 @@ pipeline {
         stage('Post-Deploy') {
             steps {
                 container('python') {
-                    sh "python3 scripts/etl/export_to_dw.py ${REPORTS_DIR} || true"
+                    sh """
+                        python3 scripts/dashboard/generate-report.py ${REPORTS_DIR} ${BUILD_NUMBER}
+                    """
                 }
-                archiveArtifacts artifacts: "${REPORTS_DIR}/**", allowEmptyArchive: true
+                // Archiver les rapports comme artefacts Jenkins
+                archiveArtifacts artifacts: 'reports/**', allowEmptyArchive: true
+                // Publier le rapport HTML (si plugin HTML Publisher installé)
+                publishHTML(target: [
+                    reportName: 'Security Dashboard',
+                    reportDir: 'reports',
+                    reportFiles: 'security-dashboard.html',
+                    keepAll: true,
+                    alwaysLinkToLastBuild: true,
+                    allowMissing: true
+                ])
             }
         }
     }
