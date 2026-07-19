@@ -1,0 +1,993 @@
+Started by GitHub push by farouk-bi
+Obtained Jenkinsfile from git https://github.com/farouk-bi/erp-securepipeline.git
+[Pipeline] Start of Pipeline
+[Pipeline] podTemplate
+[Pipeline] {
+[Pipeline] node
+[PodInfo] jenkins/erp-securepipeline-28-trl2g-d3s6s-h36hv
+	Container [docker] waiting [ContainerCreating] No message
+	Container [gitleaks] waiting [ContainerCreating] No message
+	Container [jnlp] waiting [ContainerCreating] No message
+	Container [kubectl] waiting [ContainerCreating] No message
+	Container [node] waiting [ContainerCreating] No message
+	Container [python] waiting [ContainerCreating] No message
+	Container [trivy] waiting [ContainerCreating] No message
+	Container [zap] waiting [ContainerCreating] No message
+	Pod [Pending][ContainersNotReady] containers with unready status: [node docker trivy gitleaks python kubectl zap jnlp]
+Created Pod: kubernetes jenkins/erp-securepipeline-28-trl2g-d3s6s-h36hv
+[PodInfo] jenkins/erp-securepipeline-28-trl2g-d3s6s-h36hv
+	Container [docker] waiting [ContainerCreating] No message
+	Container [gitleaks] waiting [ContainerCreating] No message
+	Container [jnlp] waiting [ContainerCreating] No message
+	Container [kubectl] waiting [ContainerCreating] No message
+	Container [node] waiting [ContainerCreating] No message
+	Container [python] waiting [ContainerCreating] No message
+	Container [trivy] waiting [ContainerCreating] No message
+	Container [zap] waiting [ContainerCreating] No message
+	Pod [Pending][ContainersNotReady] containers with unready status: [node docker trivy gitleaks python kubectl zap jnlp]
+Agent erp-securepipeline-28-trl2g-d3s6s-h36hv is provisioned from template erp-securepipeline_28-trl2g-d3s6s
+---
+apiVersion: "v1"
+kind: "Pod"
+metadata:
+  annotations:
+    kubernetes.jenkins.io/last-refresh: "1784500397364"
+    buildUrl: "http://jenkins.jenkins.svc:8080/job/erp-securepipeline/28/"
+    runUrl: "job/erp-securepipeline/28/"
+  labels:
+    app: "jenkins-agent"
+    jenkins/label-digest: "55b9ec6d7a6aea19c839de3d6dd52040a0766941"
+    jenkins/label: "erp-securepipeline_28-trl2g"
+    kubernetes.jenkins.io/controller: "http___jenkins_jenkins_svc_8080x"
+  name: "erp-securepipeline-28-trl2g-d3s6s-h36hv"
+  namespace: "jenkins"
+spec:
+  containers:
+  - command:
+    - "sleep"
+    - "3600"
+    image: "node:20-alpine"
+    name: "node"
+    resources:
+      requests:
+        memory: "512Mi"
+        cpu: "250m"
+    volumeMounts:
+    - mountPath: "/home/jenkins/agent"
+      name: "workspace-volume"
+      readOnly: false
+  - image: "docker:24-dind"
+    name: "docker"
+    resources:
+      requests:
+        memory: "512Mi"
+        cpu: "250m"
+    securityContext:
+      privileged: true
+    volumeMounts:
+    - mountPath: "/home/jenkins/agent"
+      name: "workspace-volume"
+      readOnly: false
+  - command:
+    - "sleep"
+    - "3600"
+    image: "aquasec/trivy:0.61.0"
+    name: "trivy"
+    volumeMounts:
+    - mountPath: "/home/jenkins/agent"
+      name: "workspace-volume"
+      readOnly: false
+  - command:
+    - "sleep"
+    - "3600"
+    image: "ghcr.io/gitleaks/gitleaks:latest"
+    name: "gitleaks"
+    volumeMounts:
+    - mountPath: "/home/jenkins/agent"
+      name: "workspace-volume"
+      readOnly: false
+  - command:
+    - "sleep"
+    - "3600"
+    image: "python:3.11-slim"
+    name: "python"
+    volumeMounts:
+    - mountPath: "/home/jenkins/agent"
+      name: "workspace-volume"
+      readOnly: false
+  - command:
+    - "sleep"
+    - "3600"
+    image: "dtzar/helm-kubectl:latest"
+    name: "kubectl"
+    volumeMounts:
+    - mountPath: "/home/jenkins/agent"
+      name: "workspace-volume"
+      readOnly: false
+  - command:
+    - "sleep"
+    - "3600"
+    image: "ghcr.io/zaproxy/zaproxy:stable"
+    name: "zap"
+    resources:
+      requests:
+        memory: "512Mi"
+        cpu: "250m"
+    volumeMounts:
+    - mountPath: "/home/jenkins/agent"
+      name: "workspace-volume"
+      readOnly: false
+  - env:
+    - name: "JENKINS_SECRET"
+      value: "********"
+    - name: "JENKINS_AGENT_NAME"
+      value: "erp-securepipeline-28-trl2g-d3s6s-h36hv"
+    - name: "JENKINS_WEB_SOCKET"
+      value: "true"
+    - name: "REMOTING_OPTS"
+      value: "-noReconnectAfter 1d"
+    - name: "JENKINS_NAME"
+      value: "erp-securepipeline-28-trl2g-d3s6s-h36hv"
+    - name: "JENKINS_AGENT_WORKDIR"
+      value: "/home/jenkins/agent"
+    - name: "JENKINS_URL"
+      value: "http://jenkins.jenkins.svc:8080/"
+    image: "jenkins/inbound-agent:3383.vc8881d4b_0e76-1-jdk25"
+    name: "jnlp"
+    resources:
+      requests:
+        memory: "256Mi"
+        cpu: "100m"
+    volumeMounts:
+    - mountPath: "/home/jenkins/agent"
+      name: "workspace-volume"
+      readOnly: false
+  nodeSelector:
+    kubernetes.io/os: "linux"
+  restartPolicy: "Never"
+  volumes:
+  - emptyDir:
+      medium: ""
+    name: "workspace-volume"
+
+Running on erp-securepipeline-28-trl2g-d3s6s-h36hv in /home/jenkins/agent/workspace/erp-securepipeline
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+using credential github-repo
+Cloning the remote Git repository
+Cloning repository https://github.com/farouk-bi/erp-securepipeline.git
+ > git init /home/jenkins/agent/workspace/erp-securepipeline # timeout=10
+Fetching upstream changes from https://github.com/farouk-bi/erp-securepipeline.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+using GIT_ASKPASS to set credentials GitHub repo access
+ > git fetch --tags --force --progress -- https://github.com/farouk-bi/erp-securepipeline.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+Avoid second fetch
+Checking out Revision 5ee336c342629aff8507e0dd01a3c424fa3b7538 (refs/remotes/origin/main)
+ > git config remote.origin.url https://github.com/farouk-bi/erp-securepipeline.git # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 5ee336c342629aff8507e0dd01a3c424fa3b7538 # timeout=10
+Commit message: "feat: update blue green"
+ > git rev-list --no-walk efb6ad7d207d1203d9c8c599958569f2dc6d3f13 # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Checkout)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+using credential github-repo
+Fetching changes from the remote Git repository
+Checking out Revision 5ee336c342629aff8507e0dd01a3c424fa3b7538 (refs/remotes/origin/main)
+Commit message: "feat: update blue green"
+[Pipeline] sh
+ > git rev-parse --resolve-git-dir /home/jenkins/agent/workspace/erp-securepipeline/.git # timeout=10
+ > git config remote.origin.url https://github.com/farouk-bi/erp-securepipeline.git # timeout=10
+Fetching upstream changes from https://github.com/farouk-bi/erp-securepipeline.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+using GIT_ASKPASS to set credentials GitHub repo access
+ > git fetch --tags --force --progress -- https://github.com/farouk-bi/erp-securepipeline.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git rev-parse refs/remotes/origin/main^{commit} # timeout=10
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 5ee336c342629aff8507e0dd01a3c424fa3b7538 # timeout=10
++ mkdir -p reports
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Install & Build)
+[Pipeline] container
+[Pipeline] {
+[Pipeline] sh
++ npm ci
+npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+npm warn deprecated dottie@2.0.7: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+npm warn deprecated uuid@8.3.2: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
+npm warn deprecated glob@10.5.0: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+npm warn deprecated glob@7.2.3: Old versions of glob are not supported, and contain widely publicized security vulnerabilities, which have been fixed in the current version. Please update. Support for old versions may be purchased (at exorbitant rates) by contacting i@izs.me
+
+added 500 packages, and audited 501 packages in 13s
+
+95 packages are looking for funding
+  run `npm fund` for details
+
+2 moderate severity vulnerabilities
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+[Pipeline] sh
++ npm run build --if-present
+[Pipeline] }
+[Pipeline] // container
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Unit Tests)
+[Pipeline] container
+[Pipeline] {
+[Pipeline] sh
++ npm test -- --coverage
+
+> erp-securepipeline@1.0.0 test
+> jest --coverage --forceExit --detectOpenHandles --coverage
+
+PASS tests/unit/security.test.js
+  ● Console
+
+    console.log
+      [ACCESS] GET /health - IP: ::ffff:127.0.0.1 - 2026-07-19T22:34:01.307Z
+
+      at log (src/middlewares/security.middleware.js:15:13)
+
+    console.log
+      [ACCESS] GET /health - IP: ::ffff:127.0.0.1 - 2026-07-19T22:34:01.337Z
+
+      at log (src/middlewares/security.middleware.js:15:13)
+
+    console.log
+      [ACCESS] GET /health - IP: ::ffff:127.0.0.1 - 2026-07-19T22:34:01.349Z
+
+      at log (src/middlewares/security.middleware.js:15:13)
+
+    console.log
+      [ACCESS] GET /health - IP: ::ffff:127.0.0.1 - 2026-07-19T22:34:01.362Z
+
+      at log (src/middlewares/security.middleware.js:15:13)
+
+    console.log
+      [ACCESS] GET /health - IP: ::ffff:127.0.0.1 - 2026-07-19T22:34:01.372Z
+
+      at log (src/middlewares/security.middleware.js:15:13)
+
+PASS tests/unit/auth.test.js
+  ● Console
+
+    console.log
+      [ACCESS] POST /api/auth/register - IP: ::ffff:127.0.0.1 - 2026-07-19T22:34:01.906Z
+
+      at log (src/middlewares/security.middleware.js:15:13)
+
+    console.log
+      [ACCESS] POST /api/auth/login - IP: ::ffff:127.0.0.1 - 2026-07-19T22:34:01.925Z
+
+      at log (src/middlewares/security.middleware.js:15:13)
+
+    console.log
+      [ACCESS] GET /health - IP: ::ffff:127.0.0.1 - 2026-07-19T22:34:01.970Z
+
+      at log (src/middlewares/security.middleware.js:15:13)
+
+PASS tests/unit/hr.test.js
+  ● Console
+
+    console.log
+      [ACCESS] GET /api/hr/employees - IP: ::ffff:127.0.0.1 - 2026-07-19T22:34:02.462Z
+
+      at log (src/middlewares/security.middleware.js:15:13)
+
+    console.log
+      [ACCESS] GET /api/hr/employees - IP: ::ffff:127.0.0.1 - 2026-07-19T22:34:02.487Z
+
+      at log (src/middlewares/security.middleware.js:15:13)
+
+PASS tests/unit/inventory.test.js
+  ● Console
+
+    console.log
+      [ACCESS] GET /api/inventory/products - IP: ::ffff:127.0.0.1 - 2026-07-19T22:34:02.925Z
+
+      at log (src/middlewares/security.middleware.js:15:13)
+
+PASS tests/unit/finance.test.js
+  ● Console
+
+    console.log
+      [ACCESS] GET /api/finance/invoices - IP: ::ffff:127.0.0.1 - 2026-07-19T22:34:03.490Z
+
+      at log (src/middlewares/security.middleware.js:15:13)
+
+-------------------------|---------|----------|---------|---------|-------------------------------
+File                     | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s             
+-------------------------|---------|----------|---------|---------|-------------------------------
+All files                |   50.21 |       32 |      25 |   51.76 |                               
+ src                     |   76.66 |       25 |   33.33 |   76.66 |                               
+  app.js                 |   76.66 |       25 |   33.33 |   76.66 | 36-41,47-48                   
+ src/config              |     100 |    91.66 |     100 |     100 |                               
+  database.js            |     100 |    91.66 |     100 |     100 | 11                            
+ src/middlewares         |   82.75 |       60 |      75 |   82.75 |                               
+  auth.middleware.js     |   72.22 |       60 |   66.66 |   72.22 | 17-18,29-34                   
+  security.middleware.js |     100 |      100 |     100 |     100 |                               
+ src/models              |      90 |      100 |       0 |      90 |                               
+  employee.model.js      |     100 |      100 |     100 |     100 |                               
+  invoice.model.js       |     100 |      100 |     100 |     100 |                               
+  product.model.js       |     100 |      100 |     100 |     100 |                               
+  user.model.js          |      75 |      100 |       0 |      75 | 38,44                         
+ src/routes              |   32.45 |    11.11 |   13.33 |   34.02 |                               
+  auth.routes.js         |   57.14 |    29.41 |     100 |   57.14 | 18-30,40-54                   
+  finance.routes.js      |   23.25 |        0 |       0 |   26.31 | 11-26,32-40,46-59             
+  hr.routes.js           |    28.2 |        0 |       0 |    28.2 | 11-18,24-31,37-41,47-55,61-69 
+  inventory.routes.js    |   29.26 |        0 |       0 |   30.76 | 12-21,27-34,40-44,50-66       
+-------------------------|---------|----------|---------|---------|-------------------------------
+
+Test Suites: 5 passed, 5 total
+Tests:       12 passed, 12 total
+Snapshots:   0 total
+Time:        5.173 s
+Ran all test suites.
+[Pipeline] }
+[Pipeline] // container
+Post stage
+[Pipeline] publishHTML
+[htmlpublisher] Archiving HTML reports...
+[htmlpublisher] Archiving at PROJECT level /home/jenkins/agent/workspace/erp-securepipeline/coverage/lcov-report to Coverage_20Report
+[htmlpublisher] Copying recursive using current thread
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Docker Build)
+[Pipeline] container
+[Pipeline] {
+[Pipeline] sh
++ docker build -t ghcr.io/farouk-bi/erp-app:28 .
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile:
+#1 transferring dockerfile: 1.11kB done
+#1 DONE 0.6s
+
+#2 [internal] load .dockerignore
+#2 transferring context: 166B 0.0s done
+#2 DONE 0.6s
+
+#3 [internal] load metadata for docker.io/library/node:20-alpine
+#3 DONE 5.0s
+
+#4 [internal] load build context
+#4 DONE 0.0s
+
+#5 [builder 1/5] FROM docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293
+#5 resolve docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293
+#5 resolve docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293 0.2s done
+#5 ...
+
+#4 [internal] load build context
+#4 transferring context: 272.65kB done
+#4 DONE 0.1s
+
+#5 [builder 1/5] FROM docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293
+#5 sha256:b2cbbfe903b0821005780971ddc5892edcc4ce74c5a48d82e1d2b382edac3122 0B / 1.26MB 0.1s
+#5 sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293 7.67kB / 7.67kB done
+#5 sha256:afdf98210b07b586eb71fa22ba2e432e058e4cd1304d31ed60888755b8c865fb 1.72kB / 1.72kB done
+#5 sha256:11cedc39e663e7c5d5cb9cc77a461a0d2adc25537b94e6831a6108f09cb2001b 6.52kB / 6.52kB done
+#5 sha256:6a0ac1617861a677b045b7ff88545213ec31c0ff08763195a70a4a5adda577bb 0B / 3.86MB 0.1s
+#5 sha256:4feea04c154301db6f4a496efa397b3db96603b1c009c797cfdde77bea8b3287 0B / 43.23MB 0.1s
+#5 sha256:6a0ac1617861a677b045b7ff88545213ec31c0ff08763195a70a4a5adda577bb 1.05MB / 3.86MB 0.6s
+#5 sha256:6a0ac1617861a677b045b7ff88545213ec31c0ff08763195a70a4a5adda577bb 2.10MB / 3.86MB 1.0s
+#5 sha256:6a0ac1617861a677b045b7ff88545213ec31c0ff08763195a70a4a5adda577bb 3.15MB / 3.86MB 1.4s
+#5 sha256:6a0ac1617861a677b045b7ff88545213ec31c0ff08763195a70a4a5adda577bb 3.86MB / 3.86MB 1.8s
+#5 sha256:6a0ac1617861a677b045b7ff88545213ec31c0ff08763195a70a4a5adda577bb 3.86MB / 3.86MB 1.9s done
+#5 extracting sha256:6a0ac1617861a677b045b7ff88545213ec31c0ff08763195a70a4a5adda577bb
+#5 sha256:b2cbbfe903b0821005780971ddc5892edcc4ce74c5a48d82e1d2b382edac3122 1.05MB / 1.26MB 2.5s
+#5 sha256:b2cbbfe903b0821005780971ddc5892edcc4ce74c5a48d82e1d2b382edac3122 1.26MB / 1.26MB 2.6s
+#5 sha256:4feea04c154301db6f4a496efa397b3db96603b1c009c797cfdde77bea8b3287 3.15MB / 43.23MB 2.6s
+#5 extracting sha256:6a0ac1617861a677b045b7ff88545213ec31c0ff08763195a70a4a5adda577bb 0.5s done
+#5 sha256:fff4e2c1b189bf87d63ad8bd07f7f4eb288d6f2b6a07a8bb44c60e8c075d2096 0B / 445B 2.9s
+#5 sha256:b2cbbfe903b0821005780971ddc5892edcc4ce74c5a48d82e1d2b382edac3122 1.26MB / 1.26MB 2.9s done
+#5 sha256:fff4e2c1b189bf87d63ad8bd07f7f4eb288d6f2b6a07a8bb44c60e8c075d2096 445B / 445B 3.1s
+#5 sha256:4feea04c154301db6f4a496efa397b3db96603b1c009c797cfdde77bea8b3287 6.29MB / 43.23MB 3.6s
+#5 sha256:fff4e2c1b189bf87d63ad8bd07f7f4eb288d6f2b6a07a8bb44c60e8c075d2096 445B / 445B 3.5s done
+#5 sha256:4feea04c154301db6f4a496efa397b3db96603b1c009c797cfdde77bea8b3287 9.44MB / 43.23MB 4.5s
+#5 sha256:4feea04c154301db6f4a496efa397b3db96603b1c009c797cfdde77bea8b3287 12.58MB / 43.23MB 5.3s
+#5 sha256:4feea04c154301db6f4a496efa397b3db96603b1c009c797cfdde77bea8b3287 15.73MB / 43.23MB 6.1s
+#5 sha256:4feea04c154301db6f4a496efa397b3db96603b1c009c797cfdde77bea8b3287 18.87MB / 43.23MB 7.0s
+#5 sha256:4feea04c154301db6f4a496efa397b3db96603b1c009c797cfdde77bea8b3287 22.02MB / 43.23MB 7.9s
+#5 sha256:4feea04c154301db6f4a496efa397b3db96603b1c009c797cfdde77bea8b3287 25.17MB / 43.23MB 8.9s
+#5 sha256:4feea04c154301db6f4a496efa397b3db96603b1c009c797cfdde77bea8b3287 28.31MB / 43.23MB 9.8s
+#5 sha256:4feea04c154301db6f4a496efa397b3db96603b1c009c797cfdde77bea8b3287 31.46MB / 43.23MB 10.5s
+#5 sha256:4feea04c154301db6f4a496efa397b3db96603b1c009c797cfdde77bea8b3287 34.60MB / 43.23MB 11.4s
+#5 sha256:4feea04c154301db6f4a496efa397b3db96603b1c009c797cfdde77bea8b3287 37.75MB / 43.23MB 12.3s
+#5 sha256:4feea04c154301db6f4a496efa397b3db96603b1c009c797cfdde77bea8b3287 40.89MB / 43.23MB 13.5s
+#5 sha256:4feea04c154301db6f4a496efa397b3db96603b1c009c797cfdde77bea8b3287 43.23MB / 43.23MB 14.3s
+#5 sha256:4feea04c154301db6f4a496efa397b3db96603b1c009c797cfdde77bea8b3287 43.23MB / 43.23MB 14.5s done
+#5 extracting sha256:4feea04c154301db6f4a496efa397b3db96603b1c009c797cfdde77bea8b3287
+#5 extracting sha256:4feea04c154301db6f4a496efa397b3db96603b1c009c797cfdde77bea8b3287 4.5s done
+#5 extracting sha256:b2cbbfe903b0821005780971ddc5892edcc4ce74c5a48d82e1d2b382edac3122
+#5 extracting sha256:b2cbbfe903b0821005780971ddc5892edcc4ce74c5a48d82e1d2b382edac3122 0.4s done
+#5 extracting sha256:fff4e2c1b189bf87d63ad8bd07f7f4eb288d6f2b6a07a8bb44c60e8c075d2096
+#5 extracting sha256:fff4e2c1b189bf87d63ad8bd07f7f4eb288d6f2b6a07a8bb44c60e8c075d2096 done
+#5 DONE 22.4s
+
+#6 [production 2/6] RUN addgroup -g 1001 -S appgroup &&     adduser -S appuser -u 1001 -G appgroup
+#6 ...
+
+#7 [builder 2/5] WORKDIR /app
+#7 DONE 1.1s
+
+#8 [builder 3/5] COPY package*.json ./
+#8 DONE 1.4s
+
+#6 [production 2/6] RUN addgroup -g 1001 -S appgroup &&     adduser -S appuser -u 1001 -G appgroup
+#6 DONE 2.7s
+
+#9 [production 3/6] WORKDIR /app
+#9 DONE 0.1s
+
+#10 [builder 4/5] RUN npm install --omit=dev && mkdir -p node_modules
+#10 3.917 npm warn deprecated dottie@2.0.7: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+#10 4.172 npm warn deprecated uuid@8.3.2: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
+#10 5.402 
+#10 5.402 added 117 packages, and audited 118 packages in 5s
+#10 5.402 
+#10 5.402 30 packages are looking for funding
+#10 5.402   run `npm fund` for details
+#10 5.410 
+#10 5.410 2 moderate severity vulnerabilities
+#10 5.410 
+#10 5.410 To address all issues (including breaking changes), run:
+#10 5.410   npm audit fix --force
+#10 5.410 
+#10 5.410 Run `npm audit` for details.
+#10 5.413 npm notice
+#10 5.413 npm notice New major version of npm available! 10.8.2 -> 12.0.1
+#10 5.413 npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.0.1
+#10 5.413 npm notice To update run: npm install -g npm@12.0.1
+#10 5.413 npm notice
+#10 DONE 5.6s
+
+#11 [builder 5/5] COPY src/ ./src/
+#11 DONE 0.5s
+
+#12 [production 4/6] COPY --from=builder --chown=appuser:appgroup /app/node_modules ./node_modules
+#12 DONE 1.6s
+
+#13 [production 5/6] COPY --from=builder --chown=appuser:appgroup /app/src ./src
+#13 DONE 1.6s
+
+#14 [production 6/6] COPY --from=builder --chown=appuser:appgroup /app/package*.json ./
+#14 DONE 2.0s
+
+#15 exporting to image
+#15 exporting layers
+#15 exporting layers 2.6s done
+#15 writing image sha256:0b4f2cb477ab977a4c09347956246775bb238982180d702b1d6486aeb42bf37f 0.0s done
+#15 naming to ghcr.io/farouk-bi/erp-app:28 0.0s done
+#15 DONE 2.6s
+WARNING: current commit information was not captured by the build: failed to read current commit information with git rev-parse --is-inside-work-tree
+[Pipeline] sh
++ docker tag ghcr.io/farouk-bi/erp-app:28 ghcr.io/farouk-bi/erp-app:latest
+[Pipeline] sh
++ docker save ghcr.io/farouk-bi/erp-app:28 -o erp-app-image.tar
+[Pipeline] }
+[Pipeline] // container
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Security Scanning)
+[Pipeline] parallel
+[Pipeline] { (Branch: SAST — SonarQube)
+[Pipeline] { (Branch: SCA — Trivy FS)
+[Pipeline] { (Branch: Secrets — GitLeaks)
+[Pipeline] { (Branch: Container Scan — Trivy Image)
+[Pipeline] stage
+[Pipeline] { (SAST — SonarQube)
+[Pipeline] stage
+[Pipeline] { (SCA — Trivy FS)
+[Pipeline] stage
+[Pipeline] { (Secrets — GitLeaks)
+[Pipeline] stage
+[Pipeline] { (Container Scan — Trivy Image)
+[Pipeline] container
+[Pipeline] {
+[Pipeline] container
+[Pipeline] {
+[Pipeline] container
+[Pipeline] {
+[Pipeline] container
+[Pipeline] {
+[Pipeline] withSonarQubeEnv
+Injecting SonarQube environment variables using the configuration: SonarQube
+[Pipeline] sh
++ trivy fs --format json --output reports/trivy-sca.json --severity CRITICAL,HIGH --skip-dirs .scannerwork --skip-dirs node_modules --skip-dirs .git .
+[Pipeline] sh
+[Pipeline] sh
++ gitleaks detect --source . --report-format json --report-path reports/gitleaks.json --no-git
+
+    ○
+    │╲
+    │ ○
+    ○ ░
+    ░    gitleaks
+
+[90m10:35PM[0m [32mINF[0m [1mscanned ~265708 bytes (265.71 KB) in 197ms[0m
+[90m10:35PM[0m [32mINF[0m [1mno leaks found[0m
++ trivy image --input erp-app-image.tar --format json --output reports/trivy-image.json --severity CRITICAL,HIGH
+[Pipeline] {
+[Pipeline] }
+[Pipeline] sh
+2026-07-19T22:35:12Z	INFO	Loaded	file_path="trivy.yaml"
+2026-07-19T22:35:12Z	INFO	[vulndb] Need to update DB
+2026-07-19T22:35:12Z	INFO	[vulndb] Downloading vulnerability DB...
+2026-07-19T22:35:12Z	INFO	[vulndb] Downloading artifact...	repo="mirror.gcr.io/aquasec/trivy-db:2"
+2026-07-19T22:35:12Z	INFO	Loaded	file_path="trivy.yaml"
+2026-07-19T22:35:12Z	INFO	[vulndb] Need to update DB
+2026-07-19T22:35:12Z	INFO	[vulndb] Downloading vulnerability DB...
+2026-07-19T22:35:12Z	INFO	[vulndb] Downloading artifact...	repo="mirror.gcr.io/aquasec/trivy-db:2"
+[Pipeline] // container
+[Pipeline] }
+[Pipeline] // stage
++ npx sonarqube-scanner '-Dsonar.projectKey=erp-securepipeline' '-Dsonar.sources=src' '-Dsonar.tests=tests' '-Dsonar.javascript.lcov.reportPaths=coverage/lcov.info'
+[Pipeline] }
+npm warn exec The following package was not found and will be installed: sonarqube-scanner@4.4.0
+[WARN]  Bootstrapper: SONARQUBE_SCANNER_PARAMS is deprecated, please use SONAR_SCANNER_JSON_PARAMS instead
+[INFO]  Bootstrapper: Retrieving info from "package.json" file
+[INFO]  Bootstrapper: Platform: alpine x64
+[INFO]  Bootstrapper: Server URL: http://sonarqube-sonarqube.security-tools.svc:9000
+[INFO]  Bootstrapper: Version: 4.4.0
+[INFO]  Bootstrapper: SonarQube server version: 26.5.0
+[INFO]  Bootstrapper: JRE provisioning is supported
+[INFO]  Bootstrapper: No Cache found for JRE
+[INFO]  Bootstrapper: Download starting...
+[INFO]  Bootstrapper: Download complete
+[INFO]  Bootstrapper: Downloaded JRE to /root/.sonar/cache/17aca4ecc1600f70ec88ea0f8bf3a06ba6806bdae8c96d03c07683c800f0d4e8/OpenJDK21U-jre_x64_alpine-linux_hotspot_21.0.9_10.tar.gz
+[INFO]  Bootstrapper: No Cache found for SonarScanner Engine
+[INFO]  Bootstrapper: Download starting...
+[INFO]  Bootstrapper: Download complete
+[INFO]  Bootstrapper: Downloaded SonarScanner Engine to /root/.sonar/cache/b49e97dfe1c41ef6e9331c77d5b6a268b5cdebd7489d2c8488a167b11be58027/sonar-scanner-engine-community-12.30.0.3186.jar
+[INFO]  ScannerEngine: Starting SonarScanner Engine...
+[INFO]  ScannerEngine: Java 21.0.9 Eclipse Adoptium (64-bit)
+[INFO]  ScannerEngine: Load global settings
+[INFO]  ScannerEngine: Load global settings (done) | time=410ms
+[INFO]  ScannerEngine: Server id: 9E0E7C50-AZ8dhLECQxMDipAuohK4
+[INFO]  ScannerEngine: Loading required plugins
+[INFO]  ScannerEngine: Load plugins index
+[INFO]  ScannerEngine: Load plugins index (done) | time=4485ms
+[INFO]  ScannerEngine: Load/download plugins
+[INFO]  ScannerEngine: Load/download plugins (done) | time=1942ms
+[INFO]  ScannerEngine: Process project properties
+[INFO]  ScannerEngine: Process project properties (done) | time=23ms
+[INFO]  ScannerEngine: Project key: erp-securepipeline
+[INFO]  ScannerEngine: Base dir: /home/jenkins/agent/workspace/erp-securepipeline
+[INFO]  ScannerEngine: Working dir: /home/jenkins/agent/workspace/erp-securepipeline/.scannerwork
+[INFO]  ScannerEngine: Load project settings for component key: 'erp-securepipeline'
+[INFO]  ScannerEngine: Load project settings for component key: 'erp-securepipeline' (done) | time=99ms
+[INFO]  ScannerEngine: Load quality profiles
+[INFO]  ScannerEngine: Load quality profiles (done) | time=1014ms
+[INFO]  ScannerEngine: Auto-configuring with CI 'Jenkins'
+[INFO]  ScannerEngine: Load active rules
+[INFO]  ScannerEngine: Load active rules (done) | time=1552ms
+[INFO]  ScannerEngine: Load analysis cache
+[INFO]  ScannerEngine: Load analysis cache | time=210ms
+[INFO]  ScannerEngine: Preprocessing files...
+[INFO]  ScannerEngine: 1 language detected in 18 preprocessed files (done) | time=302ms
+[INFO]  ScannerEngine: 0 files ignored because of inclusion/exclusion patterns
+[INFO]  ScannerEngine: 0 files ignored because of scm ignore settings
+[INFO]  ScannerEngine: Loading plugins for detected languages
+[INFO]  ScannerEngine: Load/download plugins
+[INFO]  ScannerEngine: Load/download plugins (done) | time=3184ms
+[INFO]  ScannerEngine: Load project repositories
+[INFO]  ScannerEngine: Load project repositories (done) | time=2152ms
+[INFO]  ScannerEngine: Indexing files...
+[INFO]  ScannerEngine: Project configuration:
+[INFO]  ScannerEngine:   Excluded sources: node_modules/**, coverage/**, reports/**, k8s/**, scripts/**
+[INFO]  ScannerEngine:   Excluded sources for coverage: tests/**, src/server.js
+[INFO]  ScannerEngine: 18 files indexed (done) | time=32ms
+[INFO]  ScannerEngine: Quality profile for js: Sonar way
+[INFO]  ScannerEngine: ------------- Run sensors on module ERP SecurePipeline
+[INFO]  ScannerEngine: Load metrics repository
+[INFO]  ScannerEngine: Load metrics repository (done) | time=107ms
+[INFO]  ScannerEngine: Reflections took 342 ms to scan 1 urls, producing 26 keys and 266 values
+[INFO]  ScannerEngine: Sensor IaC hadolint report Sensor [iac]
+[INFO]  ScannerEngine: Sensor IaC hadolint report Sensor [iac] (done) | time=1ms
+[INFO]  ScannerEngine: Sensor Java Config Sensor [iac]
+[INFO]  ScannerEngine: There are no files to be analyzed for the Java language
+[INFO]  ScannerEngine: Sensor Java Config Sensor [iac] (done) | time=6ms
+[INFO]  ScannerEngine: Sensor IaC Docker Sensor [iac]
+[INFO]  ScannerEngine: There are no files to be analyzed for the Docker language
+[INFO]  ScannerEngine: Sensor IaC Docker Sensor [iac] (done) | time=7ms
+[INFO]  ScannerEngine: Sensor HTML [web]
+[INFO]  ScannerEngine: Sensor HTML [web] (done) | time=2ms
+[INFO]  ScannerEngine: Sensor JavaScript/TypeScript/CSS analysis [javascript]
+[INFO]  ScannerEngine: Detected os: Linux arch: amd64 alpine: true. Platform: LINUX_X64_MUSL
+[INFO]  ScannerEngine: Deploy location /root/.sonar/js/node-runtime, tagetRuntime: /root/.sonar/js/node-runtime/node,  version: /root/.sonar/js/node-runtime/version.txt
+271.25 KiB / 100.48 MiB [>___________________________________________________________] 0.26% ? p/s ?815.25 KiB / 100.48 MiB [>___________________________________________________________] 0.79% ? p/s ?1.17 MiB / 100.48 MiB [>_____________________________________________________________] 1.17% ? p/s ?1.64 MiB / 100.48 MiB [>________________________________________________] 1.63% 2.29 MiB p/s ETA 43s2.09 MiB / 100.48 MiB [->_______________________________________________] 2.08% 2.29 MiB p/s ETA 42s2.34 MiB / 100.48 MiB [->_______________________________________________] 2.33% 2.29 MiB p/s ETA 42s2.34 MiB / 100.48 MiB [->_______________________________________________] 2.33% 2.22 MiB p/s ETA 44s3.22 MiB / 100.48 MiB [->_______________________________________________] 3.20% 2.22 MiB p/s ETA 43s3.47 MiB / 100.48 MiB [->_______________________________________________] 3.45% 2.22 MiB p/s ETA 43s4.11 MiB / 100.48 MiB [-->______________________________________________] 4.09% 2.27 MiB p/s ETA 42s4.55 MiB / 100.48 MiB [-->______________________________________________] 4.53% 2.27 MiB p/s ETA 42s5.00 MiB / 100.48 MiB [-->______________________________________________] 4.98% 2.27 MiB p/s ETA 42s5.19 MiB / 100.48 MiB [-->______________________________________________] 5.17% 2.24 MiB p/s ETA 42s5.81 MiB / 100.48 MiB [-->______________________________________________] 5.78% 2.24 MiB p/s ETA 42s6.22 MiB / 100.48 MiB [--->_____________________________________________] 6.19% 2.24 MiB p/s ETA 42s6.59 MiB / 100.48 MiB [--->_____________________________________________] 6.56% 2.25 MiB p/s ETA 41s7.06 MiB / 100.48 MiB [--->_____________________________________________] 7.03% 2.25 MiB p/s ETA 41s7.53 MiB / 100.48 MiB [--->_____________________________________________] 7.50% 2.25 MiB p/s ETA 41s7.56 MiB / 100.48 MiB [--->_____________________________________________] 7.53% 2.21 MiB p/s ETA 42s8.47 MiB / 100.48 MiB [---->____________________________________________] 8.43% 2.21 MiB p/s ETA 41s8.91 MiB / 100.48 MiB [---->____________________________________________] 8.86% 2.21 MiB p/s ETA 41s9.28 MiB / 100.48 MiB [---->____________________________________________] 9.24% 2.25 MiB p/s ETA 40s9.59 MiB / 100.48 MiB [---->____________________________________________] 9.55% 2.25 MiB p/s ETA 40s9.88 MiB / 100.48 MiB [---->____________________________________________] 9.83% 2.25 MiB p/s ETA 40s10.00 MiB / 100.48 MiB [---->___________________________________________] 9.95% 2.18 MiB p/s ETA 41s10.69 MiB / 100.48 MiB [---->__________________________________________] 10.64% 2.18 MiB p/s ETA 41s11.16 MiB / 100.48 MiB [----->_________________________________________] 11.10% 2.18 MiB p/s ETA 40s11.59 MiB / 100.48 MiB [----->_________________________________________] 11.54% 2.21 MiB p/s ETA 40s12.02 MiB / 100.48 MiB [----->_________________________________________] 11.96% 2.21 MiB p/s ETA 40s12.42 MiB / 100.48 MiB [----->_________________________________________] 12.36% 2.21 MiB p/s ETA 39s12.61 MiB / 100.48 MiB [----->_________________________________________] 12.55% 2.18 MiB p/s ETA 40s13.20 MiB / 100.48 MiB [------>________________________________________] 13.14% 2.18 MiB p/s ETA 40s13.55 MiB / 100.48 MiB [------>________________________________________] 13.48% 2.18 MiB p/s ETA 39s13.82 MiB / 100.48 MiB [------>________________________________________] 13.75% 2.17 MiB p/s ETA 39s14.20 MiB / 100.48 MiB [------>________________________________________] 14.14% 2.17 MiB p/s ETA 39s14.61 MiB / 100.48 MiB [------>________________________________________] 14.54% 2.17 MiB p/s ETA 39s15.02 MiB / 100.48 MiB [------->_______________________________________] 14.95% 2.16 MiB p/s ETA 39s15.30 MiB / 100.48 MiB [------->_______________________________________] 15.23% 2.16 MiB p/s ETA 39s15.80 MiB / 100.48 MiB [------->_______________________________________] 15.73% 2.16 MiB p/s ETA 39s16.09 MiB / 100.48 MiB [------->_______________________________________] 16.02% 2.13 MiB p/s ETA 39s16.56 MiB / 100.48 MiB [------->_______________________________________] 16.48% 2.13 MiB p/s ETA 39s16.94 MiB / 100.48 MiB [------->_______________________________________] 16.86% 2.13 MiB p/s ETA 39s17.31 MiB / 100.48 MiB [-------->______________________________________] 17.23% 2.13 MiB p/s ETA 39s17.72 MiB / 100.48 MiB [-------->______________________________________] 17.64% 2.13 MiB p/s ETA 38s18.09 MiB / 100.48 MiB [-------->______________________________________] 18.01% 2.13 MiB p/s ETA 38s18.44 MiB / 100.48 MiB [-------->______________________________________] 18.35% 2.11 MiB p/s ETA 38s18.91 MiB / 100.48 MiB [-------->______________________________________] 18.82% 2.11 MiB p/s ETA 38s19.25 MiB / 100.48 MiB [--------->_____________________________________] 19.16% 2.11 MiB p/s ETA 38s19.69 MiB / 100.48 MiB [--------->_____________________________________] 19.59% 2.11 MiB p/s ETA 38s19.78 MiB / 100.48 MiB [--------->_____________________________________] 19.69% 2.11 MiB p/s ETA 38s19.78 MiB / 100.48 MiB [--------->_____________________________________] 19.69% 2.11 MiB p/s ETA 38s20.23 MiB / 100.48 MiB [--------->_____________________________________] 20.14% 2.03 MiB p/s ETA 39s20.61 MiB / 100.48 MiB [--------->_____________________________________] 20.51% 2.03 MiB p/s ETA 39s20.92 MiB / 100.48 MiB [--------->_____________________________________] 20.82% 2.03 MiB p/s ETA 39s21.20 MiB / 100.48 MiB [--------->_____________________________________] 21.10% 2.00 MiB p/s ETA 39s21.45 MiB / 100.48 MiB [---------->____________________________________] 21.35% 2.00 MiB p/s ETA 39s21.45 MiB / 100.48 MiB [---------->____________________________________] 21.35% 2.00 MiB p/s ETA 39s22.20 MiB / 100.48 MiB [---------->____________________________________] 22.10% 1.98 MiB p/s ETA 39s22.52 MiB / 100.48 MiB [---------->____________________________________] 22.41% 1.98 MiB p/s ETA 39s22.77 MiB / 100.48 MiB [---------->____________________________________] 22.66% 1.98 MiB p/s ETA 39s23.05 MiB / 100.48 MiB [---------->____________________________________] 22.94% 1.95 MiB p/s ETA 39s23.42 MiB / 100.48 MiB [---------->____________________________________] 23.31% 1.95 MiB p/s ETA 39s23.77 MiB / 100.48 MiB [----------->___________________________________] 23.65% 1.95 MiB p/s ETA 39s24.06 MiB / 100.48 MiB [----------->___________________________________] 23.95% 1.93 MiB p/s ETA 39s24.34 MiB / 100.48 MiB [----------->___________________________________] 24.23% 1.93 MiB p/s ETA 39s24.66 MiB / 100.48 MiB [----------->___________________________________] 24.54% 1.93 MiB p/s ETA 39s25.06 MiB / 100.48 MiB [----------->___________________________________] 24.94% 1.91 MiB p/s ETA 39s25.41 MiB / 100.48 MiB [----------->___________________________________] 25.28% 1.91 MiB p/s ETA 39s25.75 MiB / 100.48 MiB [------------>__________________________________] 25.63% 1.91 MiB p/s ETA 39s26.00 MiB / 100.48 MiB [------------>__________________________________] 25.88% 1.89 MiB p/s ETA 39s26.44 MiB / 100.48 MiB [------------>__________________________________] 26.31% 1.89 MiB p/s ETA 39s26.72 MiB / 100.48 MiB [------------>__________________________________] 26.59% 1.89 MiB p/s ETA 39s27.19 MiB / 100.48 MiB [------------>__________________________________] 27.06% 1.90 MiB p/s ETA 38s27.28 MiB / 100.48 MiB [------------>__________________________________] 27.15% 1.90 MiB p/s ETA 38s27.41 MiB / 100.48 MiB [------------>__________________________________] 27.28% 1.90 MiB p/s ETA 38s27.41 MiB / 100.48 MiB [------------>__________________________________] 27.28% 1.80 MiB p/s ETA 40s27.75 MiB / 100.48 MiB [------------>__________________________________] 27.62% 1.80 MiB p/s ETA 40s27.81 MiB / 100.48 MiB [------------->_________________________________] 27.68% 1.80 MiB p/s ETA 40s28.14 MiB / 100.48 MiB [------------->_________________________________] 28.01% 1.76 MiB p/s ETA 41s28.48 MiB / 100.48 MiB [------------->_________________________________] 28.35% 1.76 MiB p/s ETA 40s28.92 MiB / 100.48 MiB [------------->_________________________________] 28.78% 1.76 MiB p/s ETA 40s29.12 MiB / 100.48 MiB [------------->_________________________________] 28.99% 1.75 MiB p/s ETA 40s29.52 MiB / 100.48 MiB [------------->_________________________________] 29.37% 1.75 MiB p/s ETA 40s29.91 MiB / 100.48 MiB [------------->_________________________________] 29.76% 1.75 MiB p/s ETA 40s30.27 MiB / 100.48 MiB [-------------->________________________________] 30.12% 1.76 MiB p/s ETA 39s30.61 MiB / 100.48 MiB [-------------->________________________________] 30.46% 1.76 MiB p/s ETA 39s30.98 MiB / 100.48 MiB [-------------->________________________________] 30.84% 1.76 MiB p/s ETA 39s31.23 MiB / 100.48 MiB [-------------->________________________________] 31.08% 1.75 MiB p/s ETA 39s31.73 MiB / 100.48 MiB [-------------->________________________________] 31.58% 1.75 MiB p/s ETA 39s32.09 MiB / 100.48 MiB [--------------->_______________________________] 31.94% 1.75 MiB p/s ETA 39s32.47 MiB / 100.48 MiB [--------------->_______________________________] 32.31% 1.77 MiB p/s ETA 38s32.88 MiB / 100.48 MiB [--------------->_______________________________] 32.72% 1.77 MiB p/s ETA 38s33.29 MiB / 100.48 MiB [--------------->_______________________________] 33.13% 1.77 MiB p/s ETA 37s33.63 MiB / 100.48 MiB [--------------->_______________________________] 33.47% 1.78 MiB p/s ETA 37s34.02 MiB / 100.48 MiB [--------------->_______________________________] 33.85% 1.78 MiB p/s ETA 37s34.27 MiB / 100.48 MiB [---------------->______________________________] 34.10% 1.78 MiB p/s ETA 37s34.67 MiB / 100.48 MiB [---------------->______________________________] 34.51% 1.78 MiB p/s ETA 36s35.23 MiB / 100.48 MiB [---------------->______________________________] 35.07% 1.78 MiB p/s ETA 36s35.70 MiB / 100.48 MiB [---------------->______________________________] 35.53% 1.78 MiB p/s ETA 36s36.08 MiB / 100.48 MiB [---------------->______________________________] 35.91% 1.82 MiB p/s ETA 35s36.08 MiB / 100.48 MiB [---------------->______________________________] 35.91% 1.82 MiB p/s ETA 35s36.77 MiB / 100.48 MiB [----------------->_____________________________] 36.59% 1.82 MiB p/s ETA 35s37.17 MiB / 100.48 MiB [----------------->_____________________________] 36.99% 1.82 MiB p/s ETA 34s37.55 MiB / 100.48 MiB [----------------->_____________________________] 37.37% 1.82 MiB p/s ETA 34s37.80 MiB / 100.48 MiB [----------------->_____________________________] 37.62% 1.82 MiB p/s ETA 34s38.30 MiB / 100.48 MiB [----------------->_____________________________] 38.11% 1.82 MiB p/s ETA 34s38.67 MiB / 100.48 MiB [------------------>____________________________] 38.49% 1.82 MiB p/s ETA 33s39.11 MiB / 100.48 MiB [------------------>____________________________] 38.92% 1.82 MiB p/s ETA 33s39.45 MiB / 100.48 MiB [------------------>____________________________] 39.26% 1.83 MiB p/s ETA 33s39.95 MiB / 100.48 MiB [------------------>____________________________] 39.76% 1.83 MiB p/s ETA 33s40.39 MiB / 100.48 MiB [------------------>____________________________] 40.20% 1.83 MiB p/s ETA 32s40.80 MiB / 100.48 MiB [------------------->___________________________] 40.60% 1.85 MiB p/s ETA 32s41.24 MiB / 100.48 MiB [------------------->___________________________] 41.04% 1.85 MiB p/s ETA 31s41.61 MiB / 100.48 MiB [------------------->___________________________] 41.41% 1.85 MiB p/s ETA 31s42.00 MiB / 100.48 MiB [------------------->___________________________] 41.80% 1.86 MiB p/s ETA 31s42.38 MiB / 100.48 MiB [------------------->___________________________] 42.17% 1.86 MiB p/s ETA 31s42.75 MiB / 100.48 MiB [------------------->___________________________] 42.55% 1.86 MiB p/s ETA 30s43.12 MiB / 100.48 MiB [-------------------->__________________________] 42.92% 1.86 MiB p/s ETA 30s43.50 MiB / 100.48 MiB [-------------------->__________________________] 43.29% 1.86 MiB p/s ETA 30s43.88 MiB / 100.48 MiB [-------------------->__________________________] 43.67% 1.86 MiB p/s ETA 30s44.22 MiB / 100.48 MiB [-------------------->__________________________] 44.01% 1.86 MiB p/s ETA 30s44.59 MiB / 100.48 MiB [-------------------->__________________________] 44.38% 1.86 MiB p/s ETA 30s45.06 MiB / 100.48 MiB [--------------------->_________________________] 44.85% 1.86 MiB p/s ETA 29s45.50 MiB / 100.48 MiB [--------------------->_________________________] 45.28% 1.88 MiB p/s ETA 29s45.88 MiB / 100.48 MiB [--------------------->_________________________] 45.66% 1.88 MiB p/s ETA 29s46.16 MiB / 100.48 MiB [--------------------->_________________________] 45.94% 1.88 MiB p/s ETA 28s46.57 MiB / 100.48 MiB [--------------------->_________________________] 46.34% 1.87 MiB p/s ETA 28s46.69 MiB / 100.48 MiB [--------------------->_________________________] 46.47% 1.87 MiB p/s ETA 28s47.00 MiB / 100.48 MiB [--------------------->_________________________] 46.78% 1.87 MiB p/s ETA 28s47.41 MiB / 100.48 MiB [---------------------->________________________] 47.18% 1.84 MiB p/s ETA 28s47.82 MiB / 100.48 MiB [---------------------->________________________] 47.59% 1.84 MiB p/s ETA 28s48.17 MiB / 100.48 MiB [---------------------->________________________] 47.94% 1.84 MiB p/s ETA 28s48.61 MiB / 100.48 MiB [---------------------->________________________] 48.38% 1.85 MiB p/s ETA 28s48.98 MiB / 100.48 MiB [---------------------->________________________] 48.75% 1.85 MiB p/s ETA 27s49.39 MiB / 100.48 MiB [----------------------->_______________________] 49.16% 1.85 MiB p/s ETA 27s49.77 MiB / 100.48 MiB [----------------------->_______________________] 49.54% 1.86 MiB p/s ETA 27s50.09 MiB / 100.48 MiB [----------------------->_______________________] 49.85% 1.86 MiB p/s ETA 27s50.40 MiB / 100.48 MiB [----------------------->_______________________] 50.16% 1.86 MiB p/s ETA 26s50.71 MiB / 100.48 MiB [----------------------->_______________________] 50.47% 1.84 MiB p/s ETA 27s50.99 MiB / 100.48 MiB [----------------------->_______________________] 50.75% 1.84 MiB p/s ETA 26s51.24 MiB / 100.48 MiB [----------------------->_______________________] 51.00% 1.84 MiB p/s ETA 26s51.59 MiB / 100.48 MiB [------------------------>______________________] 51.34% 1.81 MiB p/s ETA 26s51.96 MiB / 100.48 MiB [------------------------>______________________] 51.71% 1.81 MiB p/s ETA 26s52.30 MiB / 100.48 MiB [------------------------>______________________] 52.05% 1.81 MiB p/s ETA 26s52.72 MiB / 100.48 MiB [------------------------>______________________] 52.47% 1.82 MiB p/s ETA 26s53.13 MiB / 100.48 MiB [------------------------>______________________] 52.87% 1.82 MiB p/s ETA 26s53.54 MiB / 100.48 MiB [------------------------->_____________________] 53.28% 1.82 MiB p/s ETA 25s53.94 MiB / 100.48 MiB [------------------------->_____________________] 53.68% 1.83 MiB p/s ETA 25s54.34 MiB / 100.48 MiB [------------------------->_____________________] 54.08% 1.83 MiB p/s ETA 25s54.72 MiB / 100.48 MiB [------------------------->_____________________] 54.46% 1.83 MiB p/s ETA 25s55.16 MiB / 100.48 MiB [------------------------->_____________________] 54.89% 1.85 MiB p/s ETA 24s55.38 MiB / 100.48 MiB [------------------------->_____________________] 55.11% 1.85 MiB p/s ETA 24s55.47 MiB / 100.48 MiB [------------------------->_____________________] 55.20% 1.85 MiB p/s ETA 24s55.75 MiB / 100.48 MiB [-------------------------->____________________] 55.48% 1.79 MiB p/s ETA 24s56.25 MiB / 100.48 MiB [-------------------------->____________________] 55.98% 1.79 MiB p/s ETA 24s56.75 MiB / 100.48 MiB [-------------------------->____________________] 56.48% 1.79 MiB p/s ETA 24s56.97 MiB / 100.48 MiB [-------------------------->____________________] 56.70% 1.81 MiB p/s ETA 24s57.22 MiB / 100.48 MiB [-------------------------->____________________] 56.95% 1.81 MiB p/s ETA 23s57.79 MiB / 100.48 MiB [--------------------------->___________________] 57.51% 1.81 MiB p/s ETA 23s58.61 MiB / 100.48 MiB [--------------------------->___________________] 58.33% 1.87 MiB p/s ETA 22s58.95 MiB / 100.48 MiB [--------------------------->___________________] 58.67% 1.87 MiB p/s ETA 22s59.52 MiB / 100.48 MiB [--------------------------->___________________] 59.23% 1.87 MiB p/s ETA 21s59.95 MiB / 100.48 MiB [---------------------------->__________________] 59.67% 1.89 MiB p/s ETA 21s60.36 MiB / 100.48 MiB [---------------------------->__________________] 60.07% 1.89 MiB p/s ETA 21s60.73 MiB / 100.48 MiB [---------------------------->__________________] 60.44% 1.89 MiB p/s ETA 21s60.73 MiB / 100.48 MiB [---------------------------->__________________] 60.44% 1.85 MiB p/s ETA 21s61.48 MiB / 100.48 MiB [---------------------------->__________________] 61.19% 1.85 MiB p/s ETA 21s61.92 MiB / 100.48 MiB [---------------------------->__________________] 61.63% 1.85 MiB p/s ETA 20s62.09 MiB / 100.48 MiB [----------------------------->_________________] 61.80% 1.88 MiB p/s ETA 20s62.81 MiB / 100.48 MiB [----------------------------->_________________] 62.51% 1.88 MiB p/s ETA 20s63.28 MiB / 100.48 MiB [----------------------------->_________________] 62.98% 1.88 MiB p/s ETA 19s63.75 MiB / 100.48 MiB [----------------------------->_________________] 63.44% 1.94 MiB p/s ETA 18s64.22 MiB / 100.48 MiB [------------------------------>________________] 63.91% 1.94 MiB p/s ETA 18s64.66 MiB / 100.48 MiB [------------------------------>________________] 64.35% 1.94 MiB p/s ETA 18s65.12 MiB / 100.48 MiB [------------------------------>________________] 64.81% 1.96 MiB p/s ETA 18s65.59 MiB / 100.48 MiB [------------------------------>________________] 65.28% 1.96 MiB p/s ETA 17s66.09 MiB / 100.48 MiB [------------------------------>________________] 65.78% 1.96 MiB p/s ETA 17s66.19 MiB / 100.48 MiB [------------------------------>________________] 65.87% 1.95 MiB p/s ETA 17s66.89 MiB / 100.48 MiB [------------------------------->_______________] 66.57% 1.95 MiB p/s ETA 17s67.43 MiB / 100.48 MiB [------------------------------->_______________] 67.10% 1.95 MiB p/s ETA 16s67.89 MiB / 100.48 MiB [------------------------------->_______________] 67.57% 2.01 MiB p/s ETA 16s68.38 MiB / 100.48 MiB [------------------------------->_______________] 68.05% 2.01 MiB p/s ETA 16s68.78 MiB / 100.48 MiB [-------------------------------->______________] 68.45% 2.01 MiB p/s ETA 15s69.34 MiB / 100.48 MiB [-------------------------------->______________] 69.01% 2.03 MiB p/s ETA 15s69.78 MiB / 100.48 MiB [-------------------------------->______________] 69.45% 2.03 MiB p/s ETA 15s70.27 MiB / 100.48 MiB [-------------------------------->______________] 69.93% 2.03 MiB p/s ETA 14s70.73 MiB / 100.48 MiB [--------------------------------->_____________] 70.40% 2.05 MiB p/s ETA 14s71.23 MiB / 100.48 MiB [--------------------------------->_____________] 70.89% 2.05 MiB p/s ETA 14s71.73 MiB / 100.48 MiB [--------------------------------->_____________] 71.39% 2.05 MiB p/s ETA 14s72.20 MiB / 100.48 MiB [--------------------------------->_____________] 71.86% 2.08 MiB p/s ETA 13s72.20 MiB / 100.48 MiB [--------------------------------->_____________] 71.86% 2.08 MiB p/s ETA 13s73.14 MiB / 100.48 MiB [---------------------------------->____________] 72.79% 2.08 MiB p/s ETA 13s73.58 MiB / 100.48 MiB [---------------------------------->____________] 73.23% 2.09 MiB p/s ETA 12s74.09 MiB / 100.48 MiB [---------------------------------->____________] 73.74% 2.09 MiB p/s ETA 12s74.44 MiB / 100.48 MiB [---------------------------------->____________] 74.08% 2.09 MiB p/s ETA 12s75.12 MiB / 100.48 MiB [----------------------------------->___________] 74.77% 2.12 MiB p/s ETA 11s75.66 MiB / 100.48 MiB [----------------------------------->___________] 75.29% 2.12 MiB p/s ETA 11s76.17 MiB / 100.48 MiB [----------------------------------->___________] 75.81% 2.12 MiB p/s ETA 11s76.74 MiB / 100.48 MiB [----------------------------------->___________] 76.37% 2.16 MiB p/s ETA 11s77.24 MiB / 100.48 MiB [------------------------------------>__________] 76.87% 2.16 MiB p/s ETA 10s77.74 MiB / 100.48 MiB [------------------------------------>__________] 77.37% 2.16 MiB p/s ETA 10s78.22 MiB / 100.48 MiB [------------------------------------>__________] 77.84% 2.18 MiB p/s ETA 10s78.66 MiB / 100.48 MiB [------------------------------------>__________] 78.28% 2.18 MiB p/s ETA 10s78.94 MiB / 100.48 MiB [------------------------------------->__________] 78.56% 2.18 MiB p/s ETA 9s79.25 MiB / 100.48 MiB [------------------------------------->__________] 78.87% 2.15 MiB p/s ETA 9s79.75 MiB / 100.48 MiB [-------------------------------------->_________] 79.37% 2.15 MiB p/s ETA 9s80.25 MiB / 100.48 MiB [-------------------------------------->_________] 79.87% 2.15 MiB p/s ETA 9s80.69 MiB / 100.48 MiB [-------------------------------------->_________] 80.30% 2.16 MiB p/s ETA 9s81.12 MiB / 100.48 MiB [-------------------------------------->_________] 80.74% 2.16 MiB p/s ETA 8s81.50 MiB / 100.48 MiB [-------------------------------------->_________] 81.11% 2.16 MiB p/s ETA 8s81.84 MiB / 100.48 MiB [--------------------------------------->________] 81.45% 2.15 MiB p/s ETA 8s82.31 MiB / 100.48 MiB [--------------------------------------->________] 81.92% 2.15 MiB p/s ETA 8s82.69 MiB / 100.48 MiB [--------------------------------------->________] 82.29% 2.15 MiB p/s ETA 8s83.28 MiB / 100.48 MiB [--------------------------------------->________] 82.88% 2.17 MiB p/s ETA 7s83.78 MiB / 100.48 MiB [---------------------------------------->_______] 83.38% 2.17 MiB p/s ETA 7s84.25 MiB / 100.48 MiB [---------------------------------------->_______] 83.85% 2.17 MiB p/s ETA 7s84.84 MiB / 100.48 MiB [---------------------------------------->_______] 84.44% 2.19 MiB p/s ETA 7s85.22 MiB / 100.48 MiB [---------------------------------------->_______] 84.81% 2.19 MiB p/s ETA 6s85.85 MiB / 100.48 MiB [----------------------------------------->______] 85.44% 2.19 MiB p/s ETA 6s86.30 MiB / 100.48 MiB [----------------------------------------->______] 85.88% 2.21 MiB p/s ETA 6s86.77 MiB / 100.48 MiB [----------------------------------------->______] 86.35% 2.21 MiB p/s ETA 6s86.86 MiB / 100.48 MiB [----------------------------------------->______] 86.44% 2.21 MiB p/s ETA 6s87.61 MiB / 100.48 MiB [----------------------------------------->______] 87.19% 2.21 MiB p/s ETA 5s87.95 MiB / 100.48 MiB [------------------------------------------>_____] 87.53% 2.21 MiB p/s ETA 5s88.30 MiB / 100.48 MiB [------------------------------------------>_____] 87.87% 2.21 MiB p/s ETA 5s88.67 MiB / 100.48 MiB [------------------------------------------>_____] 88.25% 2.18 MiB p/s ETA 5s89.17 MiB / 100.48 MiB [------------------------------------------>_____] 88.75% 2.18 MiB p/s ETA 5s89.42 MiB / 100.48 MiB [------------------------------------------>_____] 88.99% 2.18 MiB p/s ETA 5s89.42 MiB / 100.48 MiB [------------------------------------------>_____] 88.99% 2.12 MiB p/s ETA 5s90.66 MiB / 100.48 MiB [------------------------------------------->____] 90.22% 2.12 MiB p/s ETA 4s91.03 MiB / 100.48 MiB [------------------------------------------->____] 90.60% 2.12 MiB p/s ETA 4s91.25 MiB / 100.48 MiB [------------------------------------------->____] 90.81% 2.18 MiB p/s ETA 4s91.69 MiB / 100.48 MiB [------------------------------------------->____] 91.25% 2.18 MiB p/s ETA 4s92.14 MiB / 100.48 MiB [-------------------------------------------->___] 91.70% 2.18 MiB p/s ETA 3s92.55 MiB / 100.48 MiB [-------------------------------------------->___] 92.10% 2.18 MiB p/s ETA 3s93.02 MiB / 100.48 MiB [-------------------------------------------->___] 92.57% 2.18 MiB p/s ETA 3s93.46 MiB / 100.48 MiB [-------------------------------------------->___] 93.01% 2.18 MiB p/s ETA 3s93.89 MiB / 100.48 MiB [-------------------------------------------->___] 93.45% 2.18 MiB p/s ETA 3s94.33 MiB / 100.48 MiB [--------------------------------------------->__] 93.88% 2.18 MiB p/s ETA 2s94.73 MiB / 100.48 MiB [--------------------------------------------->__] 94.28% 2.18 MiB p/s ETA 2s95.17 MiB / 100.48 MiB [--------------------------------------------->__] 94.72% 2.18 MiB p/s ETA 2s95.61 MiB / 100.48 MiB [--------------------------------------------->__] 95.15% 2.18 MiB p/s ETA 2s95.86 MiB / 100.48 MiB [--------------------------------------------->__] 95.40% 2.18 MiB p/s ETA 2s96.42 MiB / 100.48 MiB [---------------------------------------------->_] 95.96% 2.17 MiB p/s ETA 1s96.89 MiB / 100.48 MiB [---------------------------------------------->_] 96.43% 2.17 MiB p/s ETA 1s97.36 MiB / 100.48 MiB [---------------------------------------------->_] 96.89% 2.17 MiB p/s ETA 1s97.83 MiB / 100.48 MiB [---------------------------------------------->_] 97.36% 2.19 MiB p/s ETA 1s98.31 MiB / 100.48 MiB [---------------------------------------------->_] 97.84% 2.19 MiB p/s ETA 0s98.75 MiB / 100.48 MiB [----------------------------------------------->] 98.28% 2.19 MiB p/s ETA 0s99.16 MiB / 100.48 MiB [----------------------------------------------->] 98.69% 2.19 MiB p/s ETA 0s99.54 MiB / 100.48 MiB [----------------------------------------------->] 99.06% 2.19 MiB p/s ETA 0s100.04 MiB / 100.48 MiB [---------------------------------------------->] 99.56% 2.19 MiB p/s ETA 0s100.47 MiB / 100.48 MiB [---------------------------------------------->] 99.99% 2.19 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 2.19 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 2.19 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 2.05 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 2.05 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 2.05 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.91 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.91 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.91 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.79 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.79 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.79 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.68 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.68 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.68 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.57 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.57 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.57 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.47 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.47 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.47 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.37 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.37 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.37 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.28 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.28 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.28 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.20 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.20 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.20 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.12 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.12 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.12 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.05 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.05 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.05 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------>] 100.00% 1006.51 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------>] 100.00% 1006.51 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------>] 100.00% 1006.51 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 941.57 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 941.57 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 941.57 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 880.83 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 880.83 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 880.83 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 824.00 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 824.00 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 824.00 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 770.84 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 770.84 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 770.84 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 721.11 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 721.11 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 721.11 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 674.58 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 674.58 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 674.58 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 631.06 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 631.06 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 631.06 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 590.35 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 590.35 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 590.35 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 552.26 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 552.26 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 552.26 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 516.63 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 516.63 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 516.63 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 483.30 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 483.30 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 483.30 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 452.12 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 452.12 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 452.12 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 422.95 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 422.95 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 422.95 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 395.66 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 395.66 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 395.66 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 370.14 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 370.14 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 370.14 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 346.26 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 346.26 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 346.26 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 323.92 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 323.92 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 323.92 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 303.02 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 303.02 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------------] 100.00% 1.46 MiB p/s 1m9s2026-07-19T22:36:22Z	INFO	[vulndb] Artifact successfully downloaded	repo="mirror.gcr.io/aquasec/trivy-db:2"
+2026-07-19T22:36:22Z	FATAL	Fatal error	init error: DB error: error in vulnerability DB initialize: db corrupted: runtime error: invalid memory address or nil pointer dereference
++ echo '{"Results":[]}'
+[INFO]  ScannerEngine: Using embedded Node.js runtime.
+[INFO]  ScannerEngine: Using Node.js executable: '/root/.sonar/js/node-runtime/node'.
+127.25 KiB / 100.48 MiB [>___________________________________________________________] 0.12% ? p/s ?415.25 KiB / 100.48 MiB [>___________________________________________________________] 0.40% ? p/s ?687.25 KiB / 100.48 MiB [>___________________________________________________________] 0.67% ? p/s ?911.25 KiB / 100.48 MiB [>____________________________________________] 0.89% 1.28 MiB p/s ETA 1m18s1.12 MiB / 100.48 MiB [>______________________________________________] 1.12% 1.28 MiB p/s ETA 1m17s1.25 MiB / 100.48 MiB [>______________________________________________] 1.24% 1.28 MiB p/s ETA 1m17s1.78 MiB / 100.48 MiB [>______________________________________________] 1.77% 1.29 MiB p/s ETA 1m16s2.02 MiB / 100.48 MiB [>______________________________________________] 2.01% 1.29 MiB p/s ETA 1m16s2.25 MiB / 100.48 MiB [->_____________________________________________] 2.24% 1.29 MiB p/s ETA 1m16s2.50 MiB / 100.48 MiB [->_____________________________________________] 2.49% 1.28 MiB p/s ETA 1m16s2.75 MiB / 100.48 MiB [->_____________________________________________] 2.73% 1.28 MiB p/s ETA 1m16s3.00 MiB / 100.48 MiB [->_____________________________________________] 2.98% 1.28 MiB p/s ETA 1m15s3.03 MiB / 100.48 MiB [->_____________________________________________] 3.01% 1.26 MiB p/s ETA 1m17s3.45 MiB / 100.48 MiB [->_____________________________________________] 3.43% 1.26 MiB p/s ETA 1m17s3.70 MiB / 100.48 MiB [->_____________________________________________] 3.68% 1.26 MiB p/s ETA 1m16s3.95 MiB / 100.48 MiB [->_____________________________________________] 3.93% 1.27 MiB p/s ETA 1m15s4.25 MiB / 100.48 MiB [->_____________________________________________] 4.23% 1.27 MiB p/s ETA 1m15s4.44 MiB / 100.48 MiB [-->____________________________________________] 4.42% 1.27 MiB p/s ETA 1m15s4.44 MiB / 100.48 MiB [-->____________________________________________] 4.42% 1.24 MiB p/s ETA 1m17s4.90 MiB / 100.48 MiB [-->____________________________________________] 4.88% 1.24 MiB p/s ETA 1m17s5.17 MiB / 100.48 MiB [-->____________________________________________] 5.15% 1.24 MiB p/s ETA 1m17s5.48 MiB / 100.48 MiB [-->____________________________________________] 5.45% 1.24 MiB p/s ETA 1m16s5.64 MiB / 100.48 MiB [-->____________________________________________] 5.61% 1.27 MiB p/s ETA 1m14s5.84 MiB / 100.48 MiB [-->____________________________________________] 5.81% 1.27 MiB p/s ETA 1m14s5.87 MiB / 100.48 MiB [-->____________________________________________] 5.84% 1.27 MiB p/s ETA 1m14s6.34 MiB / 100.48 MiB [-->____________________________________________] 6.31% 1.27 MiB p/s ETA 1m14s6.59 MiB / 100.48 MiB [--->___________________________________________] 6.56% 1.27 MiB p/s ETA 1m14s6.84 MiB / 100.48 MiB [--->___________________________________________] 6.81% 1.27 MiB p/s ETA 1m13s7.12 MiB / 100.48 MiB [--->___________________________________________] 7.09% 1.27 MiB p/s ETA 1m13s7.36 MiB / 100.48 MiB [--->___________________________________________] 7.32% 1.27 MiB p/s ETA 1m13s7.44 MiB / 100.48 MiB [--->___________________________________________] 7.40% 1.27 MiB p/s ETA 1m13s7.86 MiB / 100.48 MiB [--->___________________________________________] 7.82% 1.27 MiB p/s ETA 1m13s8.06 MiB / 100.48 MiB [--->___________________________________________] 8.02% 1.27 MiB p/s ETA 1m12s8.28 MiB / 100.48 MiB [--->___________________________________________] 8.24% 1.27 MiB p/s ETA 1m12s8.55 MiB / 100.48 MiB [--->___________________________________________] 8.50% 1.26 MiB p/s ETA 1m13s8.81 MiB / 100.48 MiB [---->__________________________________________] 8.77% 1.26 MiB p/s ETA 1m12s9.07 MiB / 100.48 MiB [---->__________________________________________] 9.03% 1.26 MiB p/s ETA 1m12s9.23 MiB / 100.48 MiB [---->__________________________________________] 9.19% 1.25 MiB p/s ETA 1m12s9.59 MiB / 100.48 MiB [---->__________________________________________] 9.54% 1.25 MiB p/s ETA 1m12s9.77 MiB / 100.48 MiB [---->__________________________________________] 9.73% 1.25 MiB p/s ETA 1m12s10.02 MiB / 100.48 MiB [---->_________________________________________] 9.97% 1.26 MiB p/s ETA 1m12s10.22 MiB / 100.48 MiB [---->________________________________________] 10.17% 1.26 MiB p/s ETA 1m11s10.47 MiB / 100.48 MiB [---->________________________________________] 10.42% 1.26 MiB p/s ETA 1m11s10.73 MiB / 100.48 MiB [---->________________________________________] 10.68% 1.25 MiB p/s ETA 1m11s10.95 MiB / 100.48 MiB [---->________________________________________] 10.90% 1.25 MiB p/s ETA 1m11s11.15 MiB / 100.48 MiB [---->________________________________________] 11.10% 1.25 MiB p/s ETA 1m11s11.51 MiB / 100.48 MiB [----->_______________________________________] 11.45% 1.25 MiB p/s ETA 1m10s11.75 MiB / 100.48 MiB [----->_______________________________________] 11.70% 1.25 MiB p/s ETA 1m10s11.96 MiB / 100.48 MiB [----->_______________________________________] 11.90% 1.25 MiB p/s ETA 1m10s12.00 MiB / 100.48 MiB [----->_______________________________________] 11.94% 1.23 MiB p/s ETA 1m12s12.00 MiB / 100.48 MiB [----->_______________________________________] 11.94% 1.23 MiB p/s ETA 1m12s12.33 MiB / 100.48 MiB [----->_______________________________________] 12.27% 1.23 MiB p/s ETA 1m11s12.58 MiB / 100.48 MiB [----->_______________________________________] 12.52% 1.21 MiB p/s ETA 1m12s12.75 MiB / 100.48 MiB [----->_______________________________________] 12.69% 1.21 MiB p/s ETA 1m12s12.93 MiB / 100.48 MiB [----->_______________________________________] 12.87% 1.21 MiB p/s ETA 1m12s13.09 MiB / 100.48 MiB [----->_______________________________________] 13.03% 1.19 MiB p/s ETA 1m13s13.22 MiB / 100.48 MiB [----->_______________________________________] 13.15% 1.19 MiB p/s ETA 1m13s13.48 MiB / 100.48 MiB [------>______________________________________] 13.42% 1.19 MiB p/s ETA 1m13s13.68 MiB / 100.48 MiB [------>______________________________________] 13.62% 1.17 MiB p/s ETA 1m13s13.92 MiB / 100.48 MiB [------>______________________________________] 13.85% 1.17 MiB p/s ETA 1m13s14.19 MiB / 100.48 MiB [------>______________________________________] 14.12% 1.17 MiB p/s ETA 1m13s14.50 MiB / 100.48 MiB [------>______________________________________] 14.43% 1.19 MiB p/s ETA 1m12s14.80 MiB / 100.48 MiB [------>______________________________________] 14.72% 1.19 MiB p/s ETA 1m12s14.97 MiB / 100.48 MiB [------>______________________________________] 14.89% 1.19 MiB p/s ETA 1m12s15.26 MiB / 100.48 MiB [------>______________________________________] 15.19% 1.19 MiB p/s ETA 1m11s15.56 MiB / 100.48 MiB [------>______________________________________] 15.48% 1.19 MiB p/s ETA 1m11s15.87 MiB / 100.48 MiB [------->_____________________________________] 15.79% 1.19 MiB p/s ETA 1m11s16.17 MiB / 100.48 MiB [------->______________________________________] 16.09% 1.21 MiB p/s ETA 1m9s16.49 MiB / 100.48 MiB [------->______________________________________] 16.41% 1.21 MiB p/s ETA 1m9s16.80 MiB / 100.48 MiB [------->______________________________________] 16.72% 1.21 MiB p/s ETA 1m9s17.13 MiB / 100.48 MiB [------->______________________________________] 17.05% 1.24 MiB p/s ETA 1m7s17.44 MiB / 100.48 MiB [------->______________________________________] 17.36% 1.24 MiB p/s ETA 1m7s17.71 MiB / 100.48 MiB [-------->_____________________________________] 17.62% 1.24 MiB p/s ETA 1m6s17.80 MiB / 100.48 MiB [-------->_____________________________________] 17.71% 1.23 MiB p/s ETA 1m7s17.86 MiB / 100.48 MiB [-------->_____________________________________] 17.78% 1.23 MiB p/s ETA 1m7s17.86 MiB / 100.48 MiB [-------->_____________________________________] 17.78% 1.23 MiB p/s ETA 1m7s18.24 MiB / 100.48 MiB [-------->_____________________________________] 18.15% 1.20 MiB p/s ETA 1m8s18.39 MiB / 100.48 MiB [-------->_____________________________________] 18.30% 1.20 MiB p/s ETA 1m8s18.67 MiB / 100.48 MiB [-------->_____________________________________] 18.58% 1.20 MiB p/s ETA 1m8s18.97 MiB / 100.48 MiB [-------->_____________________________________] 18.88% 1.20 MiB p/s ETA 1m8s19.20 MiB / 100.48 MiB [-------->_____________________________________] 19.11% 1.20 MiB p/s ETA 1m7s19.51 MiB / 100.48 MiB [-------->_____________________________________] 19.42% 1.20 MiB p/s ETA 1m7s19.98 MiB / 100.48 MiB [--------->____________________________________] 19.88% 1.23 MiB p/s ETA 1m5s20.28 MiB / 100.48 MiB [--------->____________________________________] 20.18% 1.23 MiB p/s ETA 1m5s20.57 MiB / 100.48 MiB [--------->____________________________________] 20.47% 1.23 MiB p/s ETA 1m4s20.87 MiB / 100.48 MiB [--------->____________________________________] 20.77% 1.25 MiB p/s ETA 1m3s21.16 MiB / 100.48 MiB [--------->____________________________________] 21.06% 1.25 MiB p/s ETA 1m3s21.47 MiB / 100.48 MiB [--------->____________________________________] 21.37% 1.25 MiB p/s ETA 1m3s21.87 MiB / 100.48 MiB [---------->___________________________________] 21.77% 1.27 MiB p/s ETA 1m1s22.12 MiB / 100.48 MiB [---------->___________________________________] 22.02% 1.27 MiB p/s ETA 1m1s22.45 MiB / 100.48 MiB [---------->___________________________________] 22.34% 1.27 MiB p/s ETA 1m1s22.73 MiB / 100.48 MiB [---------->___________________________________] 22.62% 1.28 MiB p/s ETA 1m0s23.01 MiB / 100.48 MiB [---------->___________________________________] 22.90% 1.28 MiB p/s ETA 1m0s23.27 MiB / 100.48 MiB [---------->___________________________________] 23.16% 1.28 MiB p/s ETA 1m0s23.65 MiB / 100.48 MiB [----------->___________________________________] 23.53% 1.30 MiB p/s ETA 59s24.05 MiB / 100.48 MiB [----------->___________________________________] 23.94% 1.30 MiB p/s ETA 58s24.33 MiB / 100.48 MiB [----------->___________________________________] 24.21% 1.30 MiB p/s ETA 58s24.41 MiB / 100.48 MiB [----------->___________________________________] 24.29% 1.30 MiB p/s ETA 58s24.44 MiB / 100.48 MiB [----------->___________________________________] 24.32% 1.30 MiB p/s ETA 58s24.73 MiB / 100.48 MiB [----------->___________________________________] 24.61% 1.30 MiB p/s ETA 58s25.04 MiB / 100.48 MiB [----------->___________________________________] 24.92% 1.28 MiB p/s ETA 58s25.39 MiB / 100.48 MiB [----------->___________________________________] 25.26% 1.28 MiB p/s ETA 58s25.70 MiB / 100.48 MiB [------------>__________________________________] 25.58% 1.28 MiB p/s ETA 58s26.02 MiB / 100.48 MiB [------------>__________________________________] 25.89% 1.30 MiB p/s ETA 57s26.31 MiB / 100.48 MiB [------------>__________________________________] 26.19% 1.30 MiB p/s ETA 56s26.56 MiB / 100.48 MiB [------------>__________________________________] 26.43% 1.30 MiB p/s ETA 56s26.86 MiB / 100.48 MiB [------------>__________________________________] 26.73% 1.31 MiB p/s ETA 56s27.11 MiB / 100.48 MiB [------------>__________________________________] 26.98% 1.31 MiB p/s ETA 56s27.37 MiB / 100.48 MiB [------------>__________________________________] 27.24% 1.31 MiB p/s ETA 55s27.59 MiB / 100.48 MiB [------------>__________________________________] 27.46% 1.30 MiB p/s ETA 55s27.91 MiB / 100.48 MiB [------------->_________________________________] 27.78% 1.30 MiB p/s ETA 55s28.17 MiB / 100.48 MiB [------------->_________________________________] 28.04% 1.30 MiB p/s ETA 55s28.39 MiB / 100.48 MiB [------------->_________________________________] 28.25% 1.31 MiB p/s ETA 55s28.73 MiB / 100.48 MiB [------------->_________________________________] 28.60% 1.31 MiB p/s ETA 54s29.05 MiB / 100.48 MiB [------------->_________________________________] 28.91% 1.31 MiB p/s ETA 54s29.33 MiB / 100.48 MiB [------------->_________________________________] 29.19% 1.32 MiB p/s ETA 53s29.64 MiB / 100.48 MiB [------------->_________________________________] 29.50% 1.32 MiB p/s ETA 53s29.94 MiB / 100.48 MiB [-------------->________________________________] 29.79% 1.32 MiB p/s ETA 53s30.27 MiB / 100.48 MiB [-------------->________________________________] 30.12% 1.34 MiB p/s ETA 52s30.55 MiB / 100.48 MiB [-------------->________________________________] 30.40% 1.34 MiB p/s ETA 52s30.90 MiB / 100.48 MiB [-------------->________________________________] 30.76% 1.34 MiB p/s ETA 51s31.20 MiB / 100.48 MiB [-------------->________________________________] 31.05% 1.35 MiB p/s ETA 51s31.42 MiB / 100.48 MiB [-------------->________________________________] 31.27% 1.35 MiB p/s ETA 51s31.64 MiB / 100.48 MiB [-------------->________________________________] 31.48% 1.35 MiB p/s ETA 50s31.79 MiB / 100.48 MiB [-------------->________________________________] 31.64% 1.33 MiB p/s ETA 51s32.08 MiB / 100.48 MiB [--------------->_______________________________] 31.92% 1.33 MiB p/s ETA 51s32.36 MiB / 100.48 MiB [--------------->_______________________________] 32.20% 1.33 MiB p/s ETA 51s32.70 MiB / 100.48 MiB [--------------->_______________________________] 32.55% 1.34 MiB p/s ETA 50s33.07 MiB / 100.48 MiB [--------------->_______________________________] 32.92% 1.34 MiB p/s ETA 50s33.35 MiB / 100.48 MiB [--------------->_______________________________] 33.19% 1.34 MiB p/s ETA 50s33.65 MiB / 100.48 MiB [--------------->_______________________________] 33.49% 1.36 MiB p/s ETA 49s33.93 MiB / 100.48 MiB [--------------->_______________________________] 33.77% 1.36 MiB p/s ETA 49s34.22 MiB / 100.48 MiB [---------------->______________________________] 34.06% 1.36 MiB p/s ETA 48s34.50 MiB / 100.48 MiB [---------------->______________________________] 34.34% 1.36 MiB p/s ETA 48s34.80 MiB / 100.48 MiB [---------------->______________________________] 34.63% 1.36 MiB p/s ETA 48s35.09 MiB / 100.48 MiB [---------------->______________________________] 34.93% 1.36 MiB p/s ETA 48s35.48 MiB / 100.48 MiB [---------------->______________________________] 35.32% 1.38 MiB p/s ETA 47s35.86 MiB / 100.48 MiB [---------------->______________________________] 35.69% 1.38 MiB p/s ETA 46s36.22 MiB / 100.48 MiB [---------------->______________________________] 36.04% 1.38 MiB p/s ETA 46s36.59 MiB / 100.48 MiB [----------------->_____________________________] 36.41% 1.41 MiB p/s ETA 45s36.79 MiB / 100.48 MiB [----------------->_____________________________] 36.62% 1.41 MiB p/s ETA 45s37.31 MiB / 100.48 MiB [----------------->_____________________________] 37.13% 1.41 MiB p/s ETA 44s37.66 MiB / 100.48 MiB [----------------->_____________________________] 37.48% 1.43 MiB p/s ETA 43s37.96 MiB / 100.48 MiB [----------------->_____________________________] 37.78% 1.43 MiB p/s ETA 43s38.25 MiB / 100.48 MiB [----------------->_____________________________] 38.07% 1.43 MiB p/s ETA 43s38.56 MiB / 100.48 MiB [------------------>____________________________] 38.37% 1.44 MiB p/s ETA 43s38.84 MiB / 100.48 MiB [------------------>____________________________] 38.65% 1.44 MiB p/s ETA 42s39.09 MiB / 100.48 MiB [------------------>____________________________] 38.90% 1.44 MiB p/s ETA 42s39.32 MiB / 100.48 MiB [------------------>____________________________] 39.13% 1.43 MiB p/s ETA 42s39.67 MiB / 100.48 MiB [------------------>____________________________] 39.48% 1.43 MiB p/s ETA 42s39.92 MiB / 100.48 MiB [------------------>____________________________] 39.72% 1.43 MiB p/s ETA 42s40.14 MiB / 100.48 MiB [------------------>____________________________] 39.95% 1.42 MiB p/s ETA 42s40.30 MiB / 100.48 MiB [------------------>____________________________] 40.10% 1.42 MiB p/s ETA 42s40.69 MiB / 100.48 MiB [------------------->___________________________] 40.49% 1.42 MiB p/s ETA 42s40.87 MiB / 100.48 MiB [------------------->___________________________] 40.68% 1.41 MiB p/s ETA 42s41.06 MiB / 100.48 MiB [------------------->___________________________] 40.86% 1.41 MiB p/s ETA 42s41.09 MiB / 100.48 MiB [------------------->___________________________] 40.90% 1.41 MiB p/s ETA 42s41.15 MiB / 100.48 MiB [------------------->___________________________] 40.96% 1.35 MiB p/s ETA 43s41.15 MiB / 100.48 MiB [------------------->___________________________] 40.96% 1.35 MiB p/s ETA 43s41.95 MiB / 100.48 MiB [------------------->___________________________] 41.75% 1.35 MiB p/s ETA 43s42.13 MiB / 100.48 MiB [------------------->___________________________] 41.93% 1.37 MiB p/s ETA 42s42.42 MiB / 100.48 MiB [------------------->___________________________] 42.21% 1.37 MiB p/s ETA 42s42.63 MiB / 100.48 MiB [------------------->___________________________] 42.43% 1.37 MiB p/s ETA 42s42.95 MiB / 100.48 MiB [-------------------->__________________________] 42.74% 1.37 MiB p/s ETA 42s43.13 MiB / 100.48 MiB [-------------------->__________________________] 42.93% 1.37 MiB p/s ETA 41s43.13 MiB / 100.48 MiB [-------------------->__________________________] 42.93% 1.37 MiB p/s ETA 41s43.86 MiB / 100.48 MiB [-------------------->__________________________] 43.65% 1.38 MiB p/s ETA 41s44.09 MiB / 100.48 MiB [-------------------->__________________________] 43.88% 1.38 MiB p/s ETA 40s44.09 MiB / 100.48 MiB [-------------------->__________________________] 43.88% 1.38 MiB p/s ETA 40s44.57 MiB / 100.48 MiB [-------------------->__________________________] 44.36% 1.36 MiB p/s ETA 40s44.78 MiB / 100.48 MiB [-------------------->__________________________] 44.56% 1.36 MiB p/s ETA 40s45.00 MiB / 100.48 MiB [--------------------->_________________________] 44.78% 1.36 MiB p/s ETA 40s45.22 MiB / 100.48 MiB [--------------------->_________________________] 45.00% 1.34 MiB p/s ETA 41s45.43 MiB / 100.48 MiB [--------------------->_________________________] 45.22% 1.34 MiB p/s ETA 40s45.65 MiB / 100.48 MiB [--------------------->_________________________] 45.43% 1.34 MiB p/s ETA 40s45.87 MiB / 100.48 MiB [--------------------->_________________________] 45.65% 1.33 MiB p/s ETA 41s46.03 MiB / 100.48 MiB [--------------------->_________________________] 45.81% 1.33 MiB p/s ETA 40s46.06 MiB / 100.48 MiB [--------------------->_________________________] 45.84% 1.27 MiB p/s ETA 42s46.40 MiB / 100.48 MiB [--------------------->_________________________] 46.18% 1.27 MiB p/s ETA 42s46.57 MiB / 100.48 MiB [--------------------->_________________________] 46.35% 1.27 MiB p/s ETA 42s46.79 MiB / 100.48 MiB [--------------------->_________________________] 46.56% 1.27 MiB p/s ETA 42s47.01 MiB / 100.48 MiB [--------------------->_________________________] 46.78% 1.28 MiB p/s ETA 41s47.19 MiB / 100.48 MiB [---------------------->________________________] 46.97% 1.28 MiB p/s ETA 41s47.38 MiB / 100.48 MiB [---------------------->________________________] 47.15% 1.28 MiB p/s ETA 41s47.61 MiB / 100.48 MiB [---------------------->________________________] 47.38% 1.26 MiB p/s ETA 42s47.85 MiB / 100.48 MiB [---------------------->________________________] 47.62% 1.26 MiB p/s ETA 41s48.05 MiB / 100.48 MiB [---------------------->________________________] 47.82% 1.26 MiB p/s ETA 41s48.27 MiB / 100.48 MiB [---------------------->________________________] 48.03% 1.25 MiB p/s ETA 41s48.40 MiB / 100.48 MiB [---------------------->________________________] 48.17% 1.25 MiB p/s ETA 41s48.56 MiB / 100.48 MiB [---------------------->________________________] 48.33% 1.25 MiB p/s ETA 41s48.56 MiB / 100.48 MiB [---------------------->________________________] 48.33% 1.19 MiB p/s ETA 43s49.03 MiB / 100.48 MiB [---------------------->________________________] 48.79% 1.19 MiB p/s ETA 43s49.26 MiB / 100.48 MiB [----------------------->_______________________] 49.03% 1.19 MiB p/s ETA 42s49.47 MiB / 100.48 MiB [----------------------->_______________________] 49.23% 1.19 MiB p/s ETA 42s49.62 MiB / 100.48 MiB [----------------------->_______________________] 49.38% 1.22 MiB p/s ETA 41s49.79 MiB / 100.48 MiB [----------------------->_______________________] 49.56% 1.22 MiB p/s ETA 41s49.92 MiB / 100.48 MiB [----------------------->_______________________] 49.68% 1.22 MiB p/s ETA 41s50.06 MiB / 100.48 MiB [----------------------->_______________________] 49.82% 1.19 MiB p/s ETA 42s50.20 MiB / 100.48 MiB [----------------------->_______________________] 49.96% 1.19 MiB p/s ETA 42s50.36 MiB / 100.48 MiB [----------------------->_______________________] 50.12% 1.19 MiB p/s ETA 42s50.56 MiB / 100.48 MiB [----------------------->_______________________] 50.32% 1.16 MiB p/s ETA 42s50.77 MiB / 100.48 MiB [----------------------->_______________________] 50.52% 1.16 MiB p/s ETA 42s51.02 MiB / 100.48 MiB [----------------------->_______________________] 50.77% 1.16 MiB p/s ETA 42s51.27 MiB / 100.48 MiB [----------------------->_______________________] 51.02% 1.16 MiB p/s ETA 42s51.38 MiB / 100.48 MiB [------------------------>______________________] 51.13% 1.16 MiB p/s ETA 42s51.55 MiB / 100.48 MiB [------------------------>______________________] 51.30% 1.16 MiB p/s ETA 42s51.75 MiB / 100.48 MiB [------------------------>______________________] 51.50% 1.14 MiB p/s ETA 42s51.95 MiB / 100.48 MiB [------------------------>______________________] 51.70% 1.14 MiB p/s ETA 42s52.09 MiB / 100.48 MiB [------------------------>______________________] 51.84% 1.14 MiB p/s ETA 42s52.09 MiB / 100.48 MiB [------------------------>______________________] 51.84% 1.10 MiB p/s ETA 43s52.44 MiB / 100.48 MiB [------------------------>______________________] 52.18% 1.10 MiB p/s ETA 43s52.62 MiB / 100.48 MiB [------------------------>______________________] 52.37% 1.10 MiB p/s ETA 43s52.75 MiB / 100.48 MiB [------------------------>______________________] 52.50% 1.10 MiB p/s ETA 43s53.01 MiB / 100.48 MiB [------------------------>______________________] 52.76% 1.10 MiB p/s ETA 42s53.22 MiB / 100.48 MiB [------------------------>______________________] 52.96% 1.10 MiB p/s ETA 42s53.47 MiB / 100.48 MiB [------------------------->_____________________] 53.21% 1.10 MiB p/s ETA 42s53.53 MiB / 100.48 MiB [------------------------->_____________________] 53.27% 1.10 MiB p/s ETA 42s53.70 MiB / 100.48 MiB [------------------------->_____________________] 53.44% 1.10 MiB p/s ETA 42s53.86 MiB / 100.48 MiB [------------------------->_____________________] 53.60% 1.08 MiB p/s ETA 43s54.08 MiB / 100.48 MiB [------------------------->_____________________] 53.82% 1.08 MiB p/s ETA 42s54.33 MiB / 100.48 MiB [------------------------->_____________________] 54.07% 1.08 MiB p/s ETA 42s54.34 MiB / 100.48 MiB [------------------------->_____________________] 54.08% 1.06 MiB p/s ETA 43s54.84 MiB / 100.48 MiB [------------------------->_____________________] 54.58% 1.06 MiB p/s ETA 42s55.18 MiB / 100.48 MiB [------------------------->_____________________] 54.92% 1.06 MiB p/s ETA 42s55.48 MiB / 100.48 MiB [------------------------->_____________________] 55.21% 1.12 MiB p/s ETA 40s55.76 MiB / 100.48 MiB [-------------------------->____________________] 55.49% 1.12 MiB p/s ETA 40s55.98 MiB / 100.48 MiB [-------------------------->____________________] 55.71% 1.12 MiB p/s ETA 39s56.08 MiB / 100.48 MiB [-------------------------->____________________] 55.81% 1.11 MiB p/s ETA 40s56.37 MiB / 100.48 MiB [-------------------------->____________________] 56.10% 1.11 MiB p/s ETA 39s56.55 MiB / 100.48 MiB [-------------------------->____________________] 56.28% 1.11 MiB p/s ETA 39s56.76 MiB / 100.48 MiB [-------------------------->____________________] 56.48% 1.11 MiB p/s ETA 39s56.85 MiB / 100.48 MiB [-------------------------->____________________] 56.58% 1.11 MiB p/s ETA 39s57.14 MiB / 100.48 MiB [-------------------------->____________________] 56.87% 1.11 MiB p/s ETA 39s57.39 MiB / 100.48 MiB [-------------------------->____________________] 57.12% 1.11 MiB p/s ETA 38s57.59 MiB / 100.48 MiB [-------------------------->____________________] 57.32% 1.11 MiB p/s ETA 38s57.95 MiB / 100.48 MiB [--------------------------->___________________] 57.67% 1.11 MiB p/s ETA 38s58.22 MiB / 100.48 MiB [--------------------------->___________________] 57.94% 1.12 MiB p/s ETA 37s58.47 MiB / 100.48 MiB [--------------------------->___________________] 58.19% 1.12 MiB p/s ETA 37s58.68 MiB / 100.48 MiB [--------------------------->___________________] 58.40% 1.12 MiB p/s ETA 37s58.92 MiB / 100.48 MiB [--------------------------->___________________] 58.64% 1.13 MiB p/s ETA 36s59.20 MiB / 100.48 MiB [--------------------------->___________________] 58.91% 1.13 MiB p/s ETA 36s59.37 MiB / 100.48 MiB [--------------------------->___________________] 59.08% 1.13 MiB p/s ETA 36s59.54 MiB / 100.48 MiB [--------------------------->___________________] 59.25% 1.12 MiB p/s ETA 36s59.96 MiB / 100.48 MiB [---------------------------->__________________] 59.67% 1.12 MiB p/s ETA 36s60.20 MiB / 100.48 MiB [---------------------------->__________________] 59.91% 1.12 MiB p/s ETA 35s60.42 MiB / 100.48 MiB [---------------------------->__________________] 60.13% 1.14 MiB p/s ETA 35s60.64 MiB / 100.48 MiB [---------------------------->__________________] 60.35% 1.14 MiB p/s ETA 34s60.82 MiB / 100.48 MiB [---------------------------->__________________] 60.53% 1.14 MiB p/s ETA 34s61.07 MiB / 100.48 MiB [---------------------------->__________________] 60.78% 1.14 MiB p/s ETA 34s61.32 MiB / 100.48 MiB [---------------------------->__________________] 61.03% 1.14 MiB p/s ETA 34s61.56 MiB / 100.48 MiB [---------------------------->__________________] 61.26% 1.14 MiB p/s ETA 34s61.84 MiB / 100.48 MiB [---------------------------->__________________] 61.54% 1.15 MiB p/s ETA 33s62.19 MiB / 100.48 MiB [----------------------------->_________________] 61.90% 1.15 MiB p/s ETA 33s62.49 MiB / 100.48 MiB [----------------------------->_________________] 62.19% 1.15 MiB p/s ETA 33s62.77 MiB / 100.48 MiB [----------------------------->_________________] 62.47% 1.17 MiB p/s ETA 32s63.05 MiB / 100.48 MiB [----------------------------->_________________] 62.75% 1.17 MiB p/s ETA 31s63.36 MiB / 100.48 MiB [----------------------------->_________________] 63.06% 1.17 MiB p/s ETA 31s63.62 MiB / 100.48 MiB [----------------------------->_________________] 63.32% 1.19 MiB p/s ETA 30s63.93 MiB / 100.48 MiB [----------------------------->_________________] 63.63% 1.19 MiB p/s ETA 30s64.23 MiB / 100.48 MiB [------------------------------>________________] 63.92% 1.19 MiB p/s ETA 30s64.53 MiB / 100.48 MiB [------------------------------>________________] 64.22% 1.21 MiB p/s ETA 29s64.84 MiB / 100.48 MiB [------------------------------>________________] 64.53% 1.21 MiB p/s ETA 29s65.19 MiB / 100.48 MiB [------------------------------>________________] 64.88% 1.21 MiB p/s ETA 29s65.79 MiB / 100.48 MiB [------------------------------>________________] 65.47% 1.27 MiB p/s ETA 27s66.44 MiB / 100.48 MiB [------------------------------->_______________] 66.12% 1.27 MiB p/s ETA 26s67.14 MiB / 100.48 MiB [------------------------------->_______________] 66.81% 1.27 MiB p/s ETA 26s67.85 MiB / 100.48 MiB [------------------------------->_______________] 67.53% 1.41 MiB p/s ETA 23s68.23 MiB / 100.48 MiB [------------------------------->_______________] 67.91% 1.41 MiB p/s ETA 22s68.23 MiB / 100.48 MiB [------------------------------->_______________] 67.91% 1.41 MiB p/s ETA 22s69.06 MiB / 100.48 MiB [-------------------------------->______________] 68.73% 1.45 MiB p/s ETA 21s69.76 MiB / 100.48 MiB [-------------------------------->______________] 69.42% 1.45 MiB p/s ETA 21s70.38 MiB / 100.48 MiB [-------------------------------->______________] 70.04% 1.45 MiB p/s ETA 20s71.12 MiB / 100.48 MiB [--------------------------------->_____________] 70.78% 1.57 MiB p/s ETA 18s71.74 MiB / 100.48 MiB [--------------------------------->_____________] 71.40% 1.57 MiB p/s ETA 18s71.78 MiB / 100.48 MiB [--------------------------------->_____________] 71.43% 1.57 MiB p/s ETA 18s73.13 MiB / 100.48 MiB [---------------------------------->____________] 72.78% 1.69 MiB p/s ETA 16s73.83 MiB / 100.48 MiB [---------------------------------->____________] 73.48% 1.69 MiB p/s ETA 15s74.28 MiB / 100.48 MiB [---------------------------------->____________] 73.92% 1.69 MiB p/s ETA 15s75.14 MiB / 100.48 MiB [----------------------------------->___________] 74.78% 1.80 MiB p/s ETA 14s75.88 MiB / 100.48 MiB [----------------------------------->___________] 75.52% 1.80 MiB p/s ETA 13s75.99 MiB / 100.48 MiB [----------------------------------->___________] 75.63% 1.80 MiB p/s ETA 13s77.07 MiB / 100.48 MiB [------------------------------------>__________] 76.70% 1.89 MiB p/s ETA 12s77.52 MiB / 100.48 MiB [------------------------------------>__________] 77.15% 1.89 MiB p/s ETA 12s78.20 MiB / 100.48 MiB [------------------------------------>__________] 77.83% 1.89 MiB p/s ETA 11s78.89 MiB / 100.48 MiB [------------------------------------>__________] 78.51% 1.96 MiB p/s ETA 11s79.56 MiB / 100.48 MiB [------------------------------------->_________] 79.18% 1.96 MiB p/s ETA 10s79.84 MiB / 100.48 MiB [------------------------------------->_________] 79.46% 1.96 MiB p/s ETA 10s80.84 MiB / 100.48 MiB [-------------------------------------->_________] 80.46% 2.05 MiB p/s ETA 9s81.36 MiB / 100.48 MiB [-------------------------------------->_________] 80.97% 2.05 MiB p/s ETA 9s82.04 MiB / 100.48 MiB [--------------------------------------->________] 81.65% 2.05 MiB p/s ETA 9s82.59 MiB / 100.48 MiB [--------------------------------------->________] 82.19% 2.10 MiB p/s ETA 8s83.39 MiB / 100.48 MiB [--------------------------------------->________] 83.00% 2.10 MiB p/s ETA 8s83.98 MiB / 100.48 MiB [---------------------------------------->_______] 83.58% 2.11 MiB p/s ETA 7s85.01 MiB / 100.48 MiB [---------------------------------------->_______] 84.60% 2.11 MiB p/s ETA 7s85.73 MiB / 100.48 MiB [---------------------------------------->_______] 85.32% 2.11 MiB p/s ETA 6s86.37 MiB / 100.48 MiB [----------------------------------------->______] 85.96% 2.24 MiB p/s ETA 6s87.04 MiB / 100.48 MiB [----------------------------------------->______] 86.62% 2.24 MiB p/s ETA 5s87.74 MiB / 100.48 MiB [----------------------------------------->______] 87.32% 2.24 MiB p/s ETA 5s88.42 MiB / 100.48 MiB [------------------------------------------>_____] 88.00% 2.32 MiB p/s ETA 5s89.09 MiB / 100.48 MiB [------------------------------------------>_____] 88.66% 2.32 MiB p/s ETA 4s89.76 MiB / 100.48 MiB [------------------------------------------>_____] 89.33% 2.32 MiB p/s ETA 4s90.47 MiB / 100.48 MiB [------------------------------------------->____] 90.04% 2.39 MiB p/s ETA 4s90.88 MiB / 100.48 MiB [------------------------------------------->____] 90.44% 2.39 MiB p/s ETA 4s91.83 MiB / 100.48 MiB [------------------------------------------->____] 91.39% 2.39 MiB p/s ETA 3s92.05 MiB / 100.48 MiB [------------------------------------------->____] 91.61% 2.40 MiB p/s ETA 3s92.20 MiB / 100.48 MiB [-------------------------------------------->___] 91.76% 2.40 MiB p/s ETA 3s93.87 MiB / 100.48 MiB [-------------------------------------------->___] 93.42% 2.40 MiB p/s ETA 2s94.12 MiB / 100.48 MiB [-------------------------------------------->___] 93.67% 2.47 MiB p/s ETA 2s94.71 MiB / 100.48 MiB [--------------------------------------------->__] 94.26% 2.47 MiB p/s ETA 2s95.21 MiB / 100.48 MiB [--------------------------------------------->__] 94.76% 2.47 MiB p/s ETA 2s95.59 MiB / 100.48 MiB [--------------------------------------------->__] 95.13% 2.47 MiB p/s ETA 1s96.76 MiB / 100.48 MiB [---------------------------------------------->_] 96.30% 2.47 MiB p/s ETA 1s97.45 MiB / 100.48 MiB [---------------------------------------------->_] 96.98% 2.47 MiB p/s ETA 1s98.13 MiB / 100.48 MiB [---------------------------------------------->_] 97.66% 2.58 MiB p/s ETA 0s98.62 MiB / 100.48 MiB [----------------------------------------------->] 98.15% 2.58 MiB p/s ETA 0s99.43 MiB / 100.48 MiB [----------------------------------------------->] 98.95% 2.58 MiB p/s ETA 0s100.18 MiB / 100.48 MiB [---------------------------------------------->] 99.70% 2.63 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 2.63 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 2.63 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 2.50 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 2.50 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 2.50 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 2.34 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 2.34 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 2.34 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 2.19 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 2.19 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 2.19 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 2.04 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 2.04 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 2.04 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.91 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.91 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.91 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.79 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.79 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.79 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.67 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.67 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.67 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.57 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.57 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.57 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.47 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.47 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.47 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.37 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.37 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.37 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.28 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.28 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.28 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.20 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.20 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.20 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.12 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.12 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.12 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.05 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.05 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [--------------------------------------------->] 100.00% 1.05 MiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------>] 100.00% 1005.52 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------>] 100.00% 1005.52 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 940.65 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 940.65 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 940.65 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 940.65 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 879.96 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 879.96 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 879.96 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 823.19 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 823.19 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 823.19 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 770.08 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 770.08 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 770.08 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 720.40 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 720.40 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 720.40 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 673.92 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 673.92 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 673.92 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 630.44 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 630.44 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 630.44 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 589.77 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 589.77 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 589.77 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [------------------------------------------->] 100.00% 551.72 KiB p/s ETA 0s100.48 MiB / 100.48 MiB [-----------------------------------------------] 100.00% 1.29 MiB p/s 1m18s2026-07-19T22:36:31Z	FATAL	Fatal error	init error: DB error: failed to download vulnerability DB: OCI artifact error: failed to download vulnerability DB: failed to download artifact from mirror.gcr.io/aquasec/trivy-db:2: oci download error: download error: failed to download /tmp/trivy3650348206/db.tar.gz: chmod /root/.cache/trivy/db/trivy.db: no such file or directory
++ echo '{"Results":[]}'
+[Pipeline] sh
++ trivy fs --format cyclonedx --output reports/sbom.json --skip-dirs .scannerwork --skip-dirs node_modules --skip-dirs .git .
+[INFO]  ScannerEngine: Memory configuration: OS (9944 MB), Node.js (2240 MB).
+[INFO]  ScannerEngine: WebSocket client connected on /ws
+[INFO]  ScannerEngine: Plugin version: [12.3.0.39932]
+[Pipeline] }
+2026-07-19T22:36:43Z	INFO	Loaded	file_path="trivy.yaml"
+2026-07-19T22:36:44Z	INFO	"--format cyclonedx" disables security scanning. Specify "--scanners vuln" explicitly if you want to include vulnerabilities in the "cyclonedx" report.
+[Pipeline] // container
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[INFO]  ScannerEngine: Found 0 tsconfig.json file(s): []
+[INFO]  ScannerEngine: 18 source files to be analyzed
+[INFO]  ScannerEngine: Analyzing 18 file(s) using default options [lib: lib.esnext.d.ts, lib.dom.d.ts]
+[INFO]  ScannerEngine: 18/18 source files have been analyzed
+[INFO]  ScannerEngine: Hit the cache for 0 out of 18
+[INFO]  ScannerEngine: Miss the cache for 18 out of 18: ANALYSIS_MODE_INELIGIBLE [18/18]
+[INFO]  ScannerEngine: Sensor JavaScript/TypeScript/CSS analysis [javascript] (done) | time=44395ms
+[INFO]  ScannerEngine: Sensor JavaScript/TypeScript Coverage [javascript]
+[INFO]  ScannerEngine: Analysing [/home/jenkins/agent/workspace/erp-securepipeline/coverage/lcov.info]
+[INFO]  ScannerEngine: Sensor JavaScript/TypeScript Coverage [javascript] (done) | time=337ms
+[INFO]  ScannerEngine: Sensor TextAndSecretsSensor [text]
+[INFO]  ScannerEngine: Available processors: 12
+[INFO]  ScannerEngine: Using 12 threads for analysis.
+2026-07-19T22:36:59Z	INFO	[npm] To collect the license information of packages, "npm install" needs to be performed beforehand	dir="node_modules"
+2026-07-19T22:37:00Z	INFO	Suppressing dependencies for development and testing. To display them, try the '--include-dev-deps' flag.
+2026-07-19T22:37:00Z	INFO	Number of language-specific files	num=1
+[Pipeline] }
+[Pipeline] // container
+[INFO]  ScannerEngine: Start fetching files for the text and secrets analysis
+[INFO]  ScannerEngine: Using JGit to retrieve dirty files
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[INFO]  ScannerEngine: Retrieving language associated files and files included via "sonar.text.inclusions" that are tracked by git
+[INFO]  ScannerEngine: Starting the text and secrets analysis
+[INFO]  ScannerEngine: 18 source files to be analyzed for the text and secrets analysis
+[INFO]  ScannerEngine: 18/18 source files have been analyzed for the text and secrets analysis
+[INFO]  ScannerEngine: Sensor TextAndSecretsSensor [text] (done) | time=8643ms
+[INFO]  ScannerEngine: ------------- Run sensors on project
+[INFO]  ScannerEngine: Sensor Zero Coverage Sensor
+[INFO]  ScannerEngine: Sensor Zero Coverage Sensor (done) | time=0ms
+[INFO]  ScannerEngine: ------------- Gather SCA dependencies on project
+[INFO]  ScannerEngine: Dependency analysis skipped
+[INFO]  ScannerEngine: SCM Publisher SCM provider for this project is: git
+[INFO]  ScannerEngine: SCM Publisher 2 source files to be analyzed
+[INFO]  ScannerEngine: SCM Publisher 2/2 source files have been analyzed (done) | time=3637ms
+[INFO]  ScannerEngine: CPD Executor 1 file had no CPD blocks
+[INFO]  ScannerEngine: CPD Executor Calculating CPD for 12 files
+[INFO]  ScannerEngine: CPD Executor CPD calculation finished (done) | time=180ms
+[INFO]  ScannerEngine: SCM revision ID '5ee336c342629aff8507e0dd01a3c424fa3b7538'
+[INFO]  ScannerEngine: Analysis report generated in 948ms, dir size=335.1 kB
+[INFO]  ScannerEngine: Analysis report compressed in 2524ms, zip size=84.4 kB
+[INFO]  ScannerEngine: Analysis report uploaded in 9389ms
+[INFO]  ScannerEngine: ANALYSIS SUCCESSFUL, you can find the results at: http://sonarqube-sonarqube.security-tools.svc:9000/dashboard?id=erp-securepipeline
+[INFO]  ScannerEngine: Note that you will be able to access the updated dashboard once the server has processed the submitted analysis report
+[INFO]  ScannerEngine: More about the report processing at http://sonarqube-sonarqube.security-tools.svc:9000/api/ce/task?id=c1f38005-67fd-4f64-9b38-29bead0fce52
+[INFO]  ScannerEngine: Analysis total time: 1:30.816 s
+[INFO]  ScannerEngine: SonarScanner Engine completed successfully
+[Pipeline] }
+[Pipeline] // withSonarQubeEnv
+[Pipeline] }
+[Pipeline] // container
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // parallel
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Security Gate #1)
+[Pipeline] container
+[Pipeline] {
+[Pipeline] sh
++ python3 scripts/security-gate/evaluate.py reports 1
+ Security Gate #1 — Scans statiques
+
+------------ Trivy SCA: 0 Critical, 0 High, 0 Medium, 0 Low
+------------ Trivy Image: 0 Critical, 0 High, 0 Medium, 0 Low
+------------ GitLeaks: 0 secrets found
+
+============================================================
+  SECURITY GATE #1 — ÉVALUATION
+============================================================
+
+   Aucun problème critique détecté
+
+============================================================
+   SECURITY GATE #1 : PASSED
+============================================================
+
+ Rapport sauvegardé : reports/security-gate-1.json
+[Pipeline] }
+[Pipeline] // container
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Push to GHCR)
+[Pipeline] container
+[Pipeline] {
+[Pipeline] withCredentials
+Masking supported pattern matches of $GHCR_PASS
+[Pipeline] {
+[Pipeline] sh
+Warning: A secret was passed to "sh" using Groovy String interpolation, which is insecure.
+		 Affected argument(s) used the following variable(s): [GHCR_PASS]
+		 See https://jenkins.io/redirect/groovy-string-interpolation for details.
++ echo+  ****
+docker login ghcr.io -u farouk-bi --password-stdin
+WARNING! Your password will be stored unencrypted in /root/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+[Pipeline] sh
++ docker push ghcr.io/farouk-bi/erp-app:28
+The push refers to repository [ghcr.io/farouk-bi/erp-app]
+4a21645d1d4b: Preparing
+fc4e09ce8055: Preparing
+4aefdc9a53ee: Preparing
+579713cd4801: Preparing
+7fff92500f5d: Preparing
+afa543f85b46: Preparing
+e10358715ead: Preparing
+4983b93ee796: Preparing
+29df493baa13: Preparing
+4983b93ee796: Waiting
+e10358715ead: Waiting
+afa543f85b46: Waiting
+29df493baa13: Waiting
+579713cd4801: Pushed
+fc4e09ce8055: Pushed
+7fff92500f5d: Pushed
+4a21645d1d4b: Pushed
+afa543f85b46: Layer already exists
+e10358715ead: Layer already exists
+4983b93ee796: Layer already exists
+29df493baa13: Layer already exists
+4aefdc9a53ee: Pushed
+28: digest: sha256:0ed23e2a869b24e5fe2a7da016fffc6555d44b3cedb08eba4233c1ea9b3b0bff size: 2199
+[Pipeline] sh
++ docker push ghcr.io/farouk-bi/erp-app:latest
+The push refers to repository [ghcr.io/farouk-bi/erp-app]
+4a21645d1d4b: Preparing
+fc4e09ce8055: Preparing
+4aefdc9a53ee: Preparing
+579713cd4801: Preparing
+7fff92500f5d: Preparing
+afa543f85b46: Preparing
+e10358715ead: Preparing
+4983b93ee796: Preparing
+29df493baa13: Preparing
+afa543f85b46: Waiting
+e10358715ead: Waiting
+4983b93ee796: Waiting
+29df493baa13: Waiting
+4aefdc9a53ee: Layer already exists
+7fff92500f5d: Layer already exists
+4a21645d1d4b: Layer already exists
+fc4e09ce8055: Layer already exists
+579713cd4801: Layer already exists
+e10358715ead: Layer already exists
+4983b93ee796: Layer already exists
+afa543f85b46: Layer already exists
+29df493baa13: Layer already exists
+latest: digest: sha256:0ed23e2a869b24e5fe2a7da016fffc6555d44b3cedb08eba4233c1ea9b3b0bff size: 2199
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] }
+[Pipeline] // container
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Deploy Staging)
+[Pipeline] container
+[Pipeline] {
+[Pipeline] sh
++ kubectl set image deployment/erp-app 'erp-app=ghcr.io/farouk-bi/erp-app:28' -n staging
+deployment.apps/erp-app image updated
++ kubectl rollout status deployment/erp-app -n staging '--timeout=120s'
+Waiting for deployment "erp-app" rollout to finish: 0 out of 2 new replicas have been updated...
+Waiting for deployment "erp-app" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "erp-app" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "erp-app" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "erp-app" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "erp-app" rollout to finish: 1 old replicas are pending termination...
+deployment "erp-app" successfully rolled out
+[Pipeline] sh
++ sleep 20
++ kubectl exec -n staging deploy/erp-app -- wget -qO- http://localhost:3000/health
+wget: can't connect to remote host: Connection refused
+command terminated with exit code 1
++ true
+[Pipeline] }
+[Pipeline] // container
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (DAST — OWASP ZAP)
+[Pipeline] container
+[Pipeline] {
+[Pipeline] sh
++ echo 🔍 DAST — Lancement du scan OWASP ZAP baseline
+🔍 DAST — Lancement du scan OWASP ZAP baseline
++ mkdir -p /zap/wrk
++ zap-baseline.py -t http://erp-app.staging.svc:80 -J zap-report.json -r zap-report.html -I
+Using the Automation Framework
+Total of 1 URLs
+PASS: Vulnerable JS Library (Powered by Retire.js) [10003]
+PASS: In Page Banner Information Leak [10009]
+PASS: Cookie No HttpOnly Flag [10010]
+PASS: Cookie Without Secure Flag [10011]
+PASS: Re-examine Cache-control Directives [10015]
+PASS: Cross-Domain JavaScript Source File Inclusion [10017]
+PASS: Content-Type Header Missing [10019]
+PASS: Anti-clickjacking Header [10020]
+PASS: X-Content-Type-Options Header Missing [10021]
+PASS: Information Disclosure - Debug Error Messages [10023]
+PASS: Information Disclosure - Sensitive Information in URL [10024]
+PASS: Information Disclosure - Sensitive Information in HTTP Referrer Header [10025]
+PASS: HTTP Parameter Override [10026]
+PASS: Information Disclosure - Suspicious Comments [10027]
+PASS: Off-site Redirect [10028]
+PASS: Cookie Poisoning [10029]
+PASS: User Controllable Charset [10030]
+PASS: User Controllable HTML Element Attribute (Potential XSS) [10031]
+PASS: Viewstate [10032]
+PASS: Directory Browsing [10033]
+PASS: Heartbleed OpenSSL Vulnerability (Indicative) [10034]
+PASS: Strict-Transport-Security Header [10035]
+PASS: HTTP Server Response Header [10036]
+PASS: Server Leaks Information via "X-Powered-By" HTTP Response Header Field(s) [10037]
+PASS: Content Security Policy (CSP) Header Not Set [10038]
+PASS: X-Backend-Server Header Information Leak [10039]
+PASS: Secure Pages Include Mixed Content [10040]
+PASS: HTTP to HTTPS Insecure Transition in Form Post [10041]
+PASS: HTTPS to HTTP Insecure Transition in Form Post [10042]
+PASS: User Controllable JavaScript Event (XSS) [10043]
+PASS: Big Redirect Detected (Potential Sensitive Information Leak) [10044]
+PASS: Retrieved from Cache [10050]
+PASS: X-ChromeLogger-Data (XCOLD) Header Information Leak [10052]
+PASS: Cookie without SameSite Attribute [10054]
+PASS: X-Debug-Token Information Leak [10056]
+PASS: Username Hash Found [10057]
+PASS: X-AspNet-Version Response Header [10061]
+PASS: PII Disclosure [10062]
+PASS: Timestamp Disclosure [10096]
+PASS: Hash Disclosure [10097]
+PASS: Source Code Disclosure [10099]
+PASS: Weak Authentication Method [10105]
+PASS: Reverse Tabnabbing [10108]
+PASS: Modern Web Application [10109]
+PASS: Dangerous JS Functions [10110]
+PASS: Authentication Request Identified [10111]
+PASS: Session Management Response Identified [10112]
+PASS: Verification Request Identified [10113]
+PASS: Script Served From Malicious Domain (polyfill) [10115]
+PASS: ZAP is Out of Date [10116]
+PASS: Absence of Anti-CSRF Tokens [10202]
+PASS: Private IP Disclosure [2]
+PASS: Session ID in URL Rewrite [3]
+PASS: Script Passive Scan Rules [50001]
+PASS: Stats Passive Scan Rule [50003]
+PASS: Insecure JSF ViewState [90001]
+PASS: Java Serialization Object [90002]
+PASS: Sub Resource Integrity Attribute Missing [90003]
+PASS: Insufficient Site Isolation Against Spectre Vulnerability [90004]
+PASS: Charset Mismatch [90011]
+PASS: Application Error Disclosure [90022]
+PASS: WSDL File Detection [90030]
+PASS: Loosely Scoped Cookie [90033]
+WARN-NEW: Non-Storable Content [10049] x 1 
+	http://erp-app.staging.svc:80 (404 Not Found)
+WARN-NEW: CSP: Failure to Define Directive with No Fallback [10055] x 1 
+	http://erp-app.staging.svc:80 (404 Not Found)
+WARN-NEW: Permissions Policy Header Not Set [10063] x 1 
+	http://erp-app.staging.svc:80 (404 Not Found)
+WARN-NEW: Cross-Domain Misconfiguration [10098] x 1 
+	http://erp-app.staging.svc:80 (404 Not Found)
+FAIL-NEW: 0	FAIL-INPROG: 0	WARN-NEW: 4	WARN-INPROG: 0	INFO: 0	IGNORE: 0	PASS: 63
+Automation plan warnings:
+	Job spider error accessing URL http://erp-app.staging.svc:80 status code returned : 404 expected 200
++ cp /zap/wrk/zap-report.json reports/zap-report.json
++ cp /zap/wrk/zap-report.html reports/zap-report.html
++ echo 📄 Scan ZAP terminé — rapport généré
+📄 Scan ZAP terminé — rapport généré
+[Pipeline] }
+[Pipeline] // container
+Post stage
+[Pipeline] publishHTML
+[htmlpublisher] Archiving HTML reports...
+[htmlpublisher] Archiving at PROJECT level /home/jenkins/agent/workspace/erp-securepipeline/reports to ZAP_20Report
+[htmlpublisher] Copying recursive using current thread
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Security Gate #2)
+[Pipeline] container
+[Pipeline] {
+[Pipeline] sh
++ python3 scripts/security-gate/evaluate.py reports 2
+ Security Gate #2 — Scan dynamique (DAST)
+
+------------ OWASP ZAP: 0 High, 2 Medium, 1 Low, 1 Info
+
+============================================================
+  SECURITY GATE #2 — ÉVALUATION
+============================================================
+
+   Aucun problème critique détecté
+
+============================================================
+   SECURITY GATE #2 : PASSED
+============================================================
+
+ Rapport sauvegardé : reports/security-gate-2.json
+[Pipeline] }
+[Pipeline] // container
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Deploy Production)
+Stage "Deploy Production" skipped due to when conditional
+[Pipeline] getContext
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Post-Deploy)
+[Pipeline] container
+[Pipeline] {
+[Pipeline] sh
++ python3 scripts/dashboard/generate-report.py reports 28
+✅ Rapport HTML généré : reports/security-dashboard.html
+[Pipeline] }
+[Pipeline] // container
+[Pipeline] archiveArtifacts
+Archiving artifacts
+[Pipeline] publishHTML
+[htmlpublisher] Archiving HTML reports...
+[htmlpublisher] Archiving at BUILD level /home/jenkins/agent/workspace/erp-securepipeline/reports to Security_20Dashboard
+[htmlpublisher] Copying recursive using current thread
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] echo
+ Pipeline terminé. Nettoyage automatique par K8s (pod éphémère).
+[Pipeline] echo
+ ERP SecurePipeline — Build #28 SUCCESS
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] }
+[Pipeline] // podTemplate
+[Pipeline] End of Pipeline
+Finished: SUCCESS
