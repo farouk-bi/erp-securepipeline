@@ -502,8 +502,6 @@ tr:last-child td {{ border-bottom: none; }}
     </div>
 
     <div class="footer">
-        <p><strong>Projet de Fin d'Études — EPI Sousse</strong></p>
-        <p>Réalisé par Farouk Mestiri & Maha | Supervisé par Dr. Bayrem Triki</p>
         <div class="footer-tech">
             <span>Powered by: Jenkins CI/CD • SonarQube • Trivy • GitLeaks • OWASP ZAP</span>
         </div>
