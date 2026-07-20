@@ -145,7 +145,7 @@ pipeline {
                     steps {
                         container('trivy') {
                             sh """
-                                trivy image --input erp-app-image.tar --format json --output ${REPORTS_DIR}/trivy-image.json --severity CRITICAL,HIGH || echo '{"Results":[]}' > ${REPORTS_DIR}/trivy-image.json
+                                trivy image --cache-dir .trivycache --input erp-app-image.tar --format json --output ${REPORTS_DIR}/trivy-image.json --severity CRITICAL,HIGH || echo '{"Results":[]}' > ${REPORTS_DIR}/trivy-image.json
                             """
                         }
                     }
