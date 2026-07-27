@@ -92,7 +92,7 @@ pipeline {
         stage('Docker Build') {
             steps {
                 container('docker') {
-                    sh "docker build -t ${GHCR_REGISTRY}/${IMAGE_NAME}:${BUILD_NUMBER} ."
+                    sh "docker build --pull -t ghcr.io/farouk-bi/erp-app:${BUILD_NUMBER} ."
                     sh "docker tag ${GHCR_REGISTRY}/${IMAGE_NAME}:${BUILD_NUMBER} ${GHCR_REGISTRY}/${IMAGE_NAME}:latest"
                     sh "docker save ${GHCR_REGISTRY}/${IMAGE_NAME}:${BUILD_NUMBER} -o erp-app-image.tar"
                 }
@@ -248,7 +248,13 @@ pipeline {
         // STAGE 7 : DEPLOY PRODUCTION (main branch only)
         // 
         stage('Deploy Production') {
-            when { branch 'main' }
+            when { 
+                expression {
+                    return env.GIT_BRANCH == 'origin/main' ||
+                           env.GIT_BRANCH == 'main' ||
+                           env.BRANCH_NAME == 'main'
+                }
+             }
             steps {
                 container('kubectl') {
                     sh "bash scripts/blue-green-switch.sh green ${BUILD_NUMBER} || true"
